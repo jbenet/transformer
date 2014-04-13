@@ -74,3 +74,12 @@ If the tool needed to convert between a brand new format, it would just be a mat
 The secret sauce is in the shared library of (a) types, (b) conversion functions, and (c) schemas.
 
 ![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/library.png)
+
+## FAQ
+
+### Why javascript? Why not <favorite other platform>?
+
+
+pandat aims to be widely adopted, easy to use for non-programers, and extremely portable. There are many other systems which are much better tuned -- or in Haskell's case, precisely the right tool -- for solving this particular problem. However, these are unfortunately not as portable or flexible as javascript.  If having to learn obscure syntax or installing obscure platforms were prerequisites, pandat would never be adoped by most users.
+
+Besides, pandat should be able to run on websites :)
