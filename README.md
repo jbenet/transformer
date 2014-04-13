@@ -2,6 +2,11 @@
 
 pandat converts all the things!
 
+
+# ALPHA WARNING
+
+pandat development is just beginning. Star/watch the project to find out when it's good to go!
+
 ## pandat story
 
 Imagine you have a data file, that can be represented in two formats, `A` and `B`.
