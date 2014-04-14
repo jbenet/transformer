@@ -1,0 +1,25 @@
+{
+  "name": "pandat",
+  "version": "0.0.0",
+  "description": "multiformat conversion",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jbenet/pandat.git"
+  },
+  "keywords": [
+    "dat",
+    "data",
+    "conversion",
+    "format",
+    "schema"
+  ],
+  "author": "https://github.com/jbenet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbenet/pandat/issues"
+  }
+}
