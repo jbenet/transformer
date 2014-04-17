@@ -133,8 +133,8 @@ Let's look at an example. Say you have a few data sources. You have Contacts, fr
     "phone": "123-456-7890"
   },
   {
-    "name": "MZM",
-    "email": "!mzm@gmail.com",
+    "name": "Molly M",
+    "email": "mollym@example.com",
     "phone": "123-456-7890"
   },
   ...
