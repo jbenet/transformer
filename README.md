@@ -155,18 +155,18 @@ GPS data, from your intelligence-agency-sponsored homing implant, in XML:
 <?xml version="1.0"?>
 <readings>
   <reading>
-    <lat></lat>
-    <lon></lon>
+    <lat>37.447462</lat>
+    <lon>-122.160233</lon>
     <time>2013-04-01T20:28:00</time>
   </reading>
   <reading>
-    <lat></lat>
-    <lon></lon>
+    <lat>37.424983</lat>
+    <lon>-122.225887</lon>
     <time>2013-04-02T01:15:00</time>
   </reading>
   <reading>
-    <lat></lat>
-    <lon></lon>
+    <lat>37.770498</lat>
+    <lon>-122.445065</lon>
     <time>2013-04-03T18:03:00</time>
   </reading>
   ...
