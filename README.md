@@ -7,6 +7,47 @@ pandat converts all the things!
 
 pandat development is just beginning. Star/watch the project to find out when it's good to go!
 
+## Usage
+
+### pandat from the command line
+
+Install pandat globally:
+
+    npm install -g pandat
+
+
+Convert a file between two formats:
+
+    pandat <FormatA> <FormatB> < <FileA> > <FileB>
+
+
+Show schema for format:
+
+    pandat <FormatA>
+
+
+### pandat from javascript
+
+Install pandat module:
+
+    npm install pandat
+
+Converter from one format to another:
+
+```js
+var pandat = require('pandat.js');
+var a2b = pandat(formatA, formatB);
+var b_data = a2b(a_data);
+```
+
+Convert data from one format to another (shorthand):
+
+```js
+var pandat = require('pandat.js');
+var b_data = pandat(formatA, formatB, a_data);
+```
+
+
 ## pandat story
 
 Imagine you have a data file, that can be represented in two formats, `A` and `B`.
@@ -74,6 +115,176 @@ If the tool needed to convert between a brand new format, it would just be a mat
 The secret sauce is in the shared library of (a) types, (b) conversion functions, and (c) schemas.
 
 ![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/library.png)
+
+
+## pandat formats -- an example
+
+How does pandat know what formats are? It has a large library of formats to convert between. These formats are specified using (a) component types, (b) conversion functions, and (c) encoding/decoding functions. pandat formats are specified using JSON-LD documents.
+
+### the data
+
+Let's look at an example. Say you have a few data sources. You have Contacts, from your email client, in json:
+
+```json
+[
+  {
+    "name": "Juan Benet",
+    "email": "juan@benet.ai",
+    "phone": "123-456-7890"
+  },
+  {
+    "name": "MZM",
+    "email": "!mzm@gmail.com",
+    "phone": "123-456-7890"
+  },
+  ...
+]
+```
+
+Call logs, from your phone company, in a csv:
+```csv
+FROM,TO,DATE,TIME,DURATION
+(123) 456-7890,(456) 123-7890,04/01/2013,5:28pm,0:51
+(456) 123-7890,(123) 456-7890,04/01/2013,10:15pm,3:27
+(123) 456-7890,(456) 123-7890,04/03/2013,2:03pm,9:29
+...
+```
+
+GPS data, from your intelligence-agency-sponsored homing implant, in XML:
+```xml
+<?xml version="1.0"?>
+<readings>
+  <reading>
+    <lat></lat>
+    <lon></lon>
+    <time>2013-04-01T20:28:00</time>
+  </reading>
+  <reading>
+    <lat></lat>
+    <lon></lon>
+    <time>2013-04-02T01:15:00</time>
+  </reading>
+  <reading>
+    <lat></lat>
+    <lon></lon>
+    <time>2013-04-03T18:03:00</time>
+  </reading>
+  ...
+</readings>
+```
+
+Wouldn't it be nice to get all the data cleaned up and reformatted automatically? And wouldn't it be great to be able to generate a call history with meaningful names and locations? Something like:
+
+```json
+{
+  "owner": "123.456.7890",
+  "history": [
+    {
+      "to": "Molly M",
+      "number": "456.123.7890",
+      "date": "2013-04-01 17:28:00",
+      "location": "Palo Alto, CA"
+    },
+    {
+      "from": "Molly M",
+      "number": "456.123.7890",
+      "date": "2013-04-01 22:15:00",
+      "location": "Atherton, CA"
+    },
+    {
+      "to": "Molly M",
+      "number": "456.123.7890",
+      "date": "2013-04-01 22:15:00",
+      "location": "San Francisco, CA"
+    }
+  ]
+}
+```
+
+This is completely doable given format schemas and type conversions. All pandat needs is the right formats.
+
+### the formats
+
+(Common fields `[@context, @id, @type]` in formats omitted for simplicity).
+
+The input format for the contacts:
+
+```json
+{
+  "codec": "pandat/json",
+  "schema": [ {
+    "name": "pandat/person-name",
+    "email": "pandat/email",
+    "phone": "pandat/phone-number-usa-dotted"
+  } ]
+}
+```
+
+
+The input format for the call records:
+
+```json
+{
+  "codec": "pandat/csv",
+  "schema": {
+    "FROM": "pandat/phone-number-usa-parens",
+    "TO": "pandat/phone-number-usa-parens",
+    "DATE": "pandat/date",
+    "TIME": "pandat/time-of-day",
+    "DURATION": "pandat/time-hms",
+  }
+}
+```
+
+The input format for the location records:
+
+```json
+{
+  "codec": "pandat/xml",
+  "schema": {
+    "readings": [ {
+      "reading": {
+        "lat": "pandat/latitude",
+        "lon": "pandat/longitude",
+        "time": "pandat/date-iso"
+      }
+    } ]
+  }
+}
+```
+
+The output format you want:
+
+```json
+{
+  "codec": "pandat/xml",
+  "schema": {
+    "owner": "pandat/phone-number-usa-dotted",
+    "history": [ {
+      "to": "pandat/person-name",
+      "from": "pandat/person-name",
+      "number": "pandat/phone-number-usa-dotted",
+      "date": "pandat/date-iso-space",
+      "location": "pandat/us-city-name"
+    } ]
+  }
+}
+```
+
+Each of the `pandat/<name>` types are pandat modules that provide a type with conversions. The `pandat` part is needed because anyone can publish new codecs or types to pandat's index.
+
+### the conversions
+
+All the types referenced above (e.g. `pandat/person-name` and `pandat/date-iso`) have their own format description registered in pandat's index. For example
+
+```json
+{
+  "@id": "https://pandat.io/pandat/date-iso",
+  "@type": "string"
+}
+```
+
+
 
 ## FAQ
 
