@@ -119,7 +119,7 @@ The secret sauce is in the shared library of (a) types, (b) conversion functions
 
 ## pandat formats -- an example
 
-How does pandat know what formats are? It has a large library of formats to convert between. These formats are specified using (a) component types, (b) conversion functions, and (c) encoding/decoding functions. pandat formats are specified using JSON-LD documents.
+How does pandat know what formats are? It has a large library of Types (formats), Codecs, and Conversion functions. These compose. They are specified using JSON-LD documents and javascript code (codecs and conversions).
 
 ### the data
 
@@ -203,11 +203,11 @@ Wouldn't it be nice to get all the data cleaned up and reformatted automatically
 
 This is completely doable given format schemas and type conversions. All pandat needs is the right formats.
 
-### the formats
+### the types (formats)
 
 (Common fields `[@context, @id, @type]` in formats omitted for simplicity).
 
-The input format for the contacts:
+The input type for the contacts:
 
 ```json
 {
@@ -221,7 +221,7 @@ The input format for the contacts:
 ```
 
 
-The input format for the call records:
+The input type for the call records:
 
 ```json
 {
@@ -236,7 +236,7 @@ The input format for the call records:
 }
 ```
 
-The input format for the location records:
+The input type for the location records:
 
 ```json
 {
@@ -253,7 +253,7 @@ The input format for the location records:
 }
 ```
 
-The output format you want:
+The output type you want:
 
 ```json
 {
@@ -271,7 +271,7 @@ The output format you want:
 }
 ```
 
-Each of the `pandat/<name>` types are pandat modules that provide a type with conversions. The `pandat` part is needed because anyone can publish new codecs or types to pandat's index.
+Each of the `pandat/<name>` `@types` are pandat modules that link pandat objects and allow pandat to find the relevant functions. The `pandat/` part here shows anyone can publish new codecs or types to pandat's index.
 
 ### the conversions
 
