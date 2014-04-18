@@ -47,6 +47,23 @@ var pandat = require('pandat.js');
 var b_data = pandat(formatA, formatB, a_data);
 ```
 
+For example:
+
+```js
+// convert unix time to iso date
+var pandat = require('pandat.js');
+var unix2iso = pandat('pandat/date-unixtime','pandat/date-iso')
+var unix = 1397788143
+var iso = unix2iso(unix)
+//'2014-04-18T02:29:03'
+
+// convert iso date to unix time
+var iso2unix = pandat('pandat/date-iso','pandat/date-unixtime')
+var unix2 = iso2unix(iso)
+// 1397788143
+```
+
+
 
 ## pandat story
 
