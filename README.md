@@ -11,7 +11,7 @@ transformer development is just beginning. Star/watch the project to find out wh
 
 ### transformer from the command line
 
-Install pandat globally:
+Install transformer globally:
 
     npm install -g transformer
 
