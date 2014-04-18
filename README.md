@@ -1,104 +1,104 @@
-# pandat - universal data conversion
+# transformer - universal data conversion
 
-pandat converts all the things!
+`transformer` converts all the things!
 
 
 # ALPHA WARNING
 
-pandat development is just beginning. Star/watch the project to find out when it's good to go!
+transformer development is just beginning. Star/watch the project to find out when it's good to go!
 
 ## Usage
 
-### pandat from the command line
+### transformer from the command line
 
 Install pandat globally:
 
-    npm install -g pandat
+    npm install -g transformer
 
 
 Convert a file between two formats:
 
-    pandat <FormatA> <FormatB> < <FileA> > <FileB>
+    transform <FormatA> <FormatB> < <FileA> > <FileB>
 
 
 Show schema for format:
 
-    pandat <FormatA>
+    transform <FormatA>
 
 
-### pandat from javascript
+### transformer from javascript
 
-Install pandat module:
+Install transformer module:
 
-    npm install pandat
+    npm install transformer
 
 Converter from one format to another:
 
 ```js
-var pandat = require('pandat.js');
-var a2b = pandat(formatA, formatB);
+var transformer = require('transformer');
+var a2b = transformer(formatA, formatB);
 var b_data = a2b(a_data);
 ```
 
 Convert data from one format to another (shorthand):
 
 ```js
-var pandat = require('pandat.js');
-var b_data = pandat(formatA, formatB, a_data);
+var transformer = require('transformer');
+var b_data = transformer(formatA, formatB, a_data);
 ```
 
 For example:
 
 ```js
 // convert unix time to iso date
-var pandat = require('pandat.js');
-var unix2iso = pandat('pandat/date-unixtime','pandat/date-iso')
+var transformer = require('transformer');
+var unix2iso = transformer('date-unixtime','date-iso')
 var unix = 1397788143
 var iso = unix2iso(unix)
 //'2014-04-18T02:29:03'
 
 // convert iso date to unix time
-var iso2unix = pandat('pandat/date-iso','pandat/date-unixtime')
+var iso2unix = transformer('date-iso','date-unixtime')
 var unix2 = iso2unix(iso)
 // 1397788143
 ```
 
 
 
-## pandat story
+## transformer story
 
 Imagine you have a data file, that can be represented in two formats, `A` and `B`.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/anb.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/anb.png)
 
 You'd like to convert from one format to the other `A -> B`, so you look for a program to convert the file. If there isn't one, you write your own.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/a2b.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/a2b.png)
 
 Maybe your program is smart enough to convert in both directions, but maybe that means an entirely different program
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/b2a.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/b2a.png)
 
 
 Say you have a _third_ format `C`. Uh oh, that could mean up to _four more_ programs.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/4conv.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/4conv.png)
 
 So, though sometimes there are smart programs that will leverage intermediate conversions (say, `A -> C` expands to `A -> B -> C`), this is generally inefficient, potentially causing a `N to N^2` blowup in the number of programs to write.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/inefficient.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/inefficient.png)
 
 This is particularly annoying because often the conversions are simple transformations
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/types1.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/types1.png)
 
 Or even simpler, just re-arrangements
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/types2.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/types2.png)
 
 There's got to be a better way. What if there was some way to represent _all_ data, and build converters between _that one format_ and all others?
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/hub.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/hub.png)
 
 This is how [Pandoc](http://johnmacfarlane.net/pandoc/) (document converter) and [LLVM](http://llvm.org) (compiler) work:
 
@@ -106,37 +106,37 @@ This is how [Pandoc](http://johnmacfarlane.net/pandoc/) (document converter) and
 
 The problem is that picking _THE universal data format_ is hard. In a way, all data is part of the same hyperspace, and a particular dataset is just a projection into a subspace. So it's just a matter of finding to the right _dimensions_. For example, the simple transformation earlier is really just a projection from one set of dimensions to another. The _values_ of the data are  the same. The dimensions are the _types_.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/types1.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/types1.png)
 
 So what if we already have our magical _universal data representation_, and it is just the combination of all others? What if our magical multi-format conversion tool is just a matter of defining the right _types_ and their _conversions_? Imagine if we had a massive library of types and conversion functions:
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/typesnfuncs.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/typesnfuncs.png)
 
 We should be able to build larger types that uniquely match each format -- let's call these `schemas`. The conversion between two formats would just be the aggregate conversions between the component types:
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/schemaswtypes.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/schemaswtypes.png)
 
 
 So, given the (a) types, (b) type conversion functions, and (c) schemas, _one_ dumb tool should be able to convert two formats.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/schema1.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/schema1.png)
 
 If the tool needed to convert between a brand new format, it would just be a matter of defining the schema, and potentially some new types and functions. Most formats reuse types, so this gets easier over time.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/schema2.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/schema2.png)
 
-[Pandat](http://github.com/jbenet/pandat) is this _dumb_ but super-efficient multi-format conversion tool.
+[transformer](http://github.com/jbenet/transformer) is this _dumb_ but super-efficient multi-format conversion tool.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/efficient.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/efficient.png)
 
 The secret sauce is in the shared library of (a) types, (b) conversion functions, and (c) schemas.
 
-![](https://raw.githubusercontent.com/jbenet/pandat/master/dev/img/library.png)
+![](https://raw.githubusercontent.com/jbenet/transformer/master/dev/img/library.png)
 
 
-## pandat formats -- an example
+## transformer formats -- an example
 
-How does pandat know what formats are? It has a large library of Types (formats), Codecs, and Conversion functions. These compose. They are specified using JSON-LD documents and javascript code (codecs and conversions).
+How does transformer know what formats are? It has a large library of Types (formats), Codecs, and Conversion functions. These compose. They are specified using JSON-LD documents and javascript code (codecs and conversions).
 
 ### the data
 
@@ -218,7 +218,7 @@ Wouldn't it be nice to get all the data cleaned up and reformatted automatically
 }
 ```
 
-This is completely doable given format schemas and type conversions. All pandat needs is the right formats.
+This is completely doable given format schemas and type conversions. All transformer needs is the right formats.
 
 ### the types (formats)
 
@@ -228,11 +228,11 @@ The input type for the contacts:
 
 ```json
 {
-  "codec": "pandat/json",
+  "codec": "transformer/json",
   "schema": [ {
-    "name": "pandat/person-name",
-    "email": "pandat/email",
-    "phone": "pandat/phone-number-usa-dotted"
+    "name": "transformer/person-name",
+    "email": "transformer/email",
+    "phone": "transformer/phone-number-usa-dotted"
   } ]
 }
 ```
@@ -242,13 +242,13 @@ The input type for the call records:
 
 ```json
 {
-  "codec": "pandat/csv",
+  "codec": "transformer/csv",
   "schema": {
-    "FROM": "pandat/phone-number-usa-parens",
-    "TO": "pandat/phone-number-usa-parens",
-    "DATE": "pandat/date",
-    "TIME": "pandat/time-of-day",
-    "DURATION": "pandat/time-hms",
+    "FROM": "transformer/phone-number-usa-parens",
+    "TO": "transformer/phone-number-usa-parens",
+    "DATE": "transformer/date",
+    "TIME": "transformer/time-of-day",
+    "DURATION": "transformer/time-hms",
   }
 }
 ```
@@ -257,13 +257,13 @@ The input type for the location records:
 
 ```json
 {
-  "codec": "pandat/xml",
+  "codec": "transformer/xml",
   "schema": {
     "readings": [ {
       "reading": {
-        "lat": "pandat/latitude",
-        "lon": "pandat/longitude",
-        "time": "pandat/date-iso"
+        "lat": "transformer/latitude",
+        "lon": "transformer/longitude",
+        "time": "transformer/date-iso"
       }
     } ]
   }
@@ -274,29 +274,29 @@ The output type you want:
 
 ```json
 {
-  "codec": "pandat/xml",
+  "codec": "transformer/xml",
   "schema": {
-    "owner": "pandat/phone-number-usa-dotted",
+    "owner": "transformer/phone-number-usa-dotted",
     "history": [ {
-      "to": "pandat/person-name",
-      "from": "pandat/person-name",
-      "number": "pandat/phone-number-usa-dotted",
-      "date": "pandat/date-iso-space",
-      "location": "pandat/us-city-name"
+      "to": "transformer/person-name",
+      "from": "transformer/person-name",
+      "number": "transformer/phone-number-usa-dotted",
+      "date": "transformer/date-iso-space",
+      "location": "transformer/us-city-name"
     } ]
   }
 }
 ```
 
-Each of the `pandat/<name>` `@types` are pandat modules that link pandat objects and allow pandat to find the relevant functions. The `pandat/` part here shows anyone can publish new codecs or types to pandat's index.
+Each of the `transformer/<name>` `@types` are transformer modules that link transformer objects and allow transformer to find the relevant functions. The `transformer/` part here shows anyone can publish new codecs or types to transformer's index.
 
 ### the conversions
 
-All the types referenced above (e.g. `pandat/person-name` and `pandat/date-iso`) have their own format description registered in pandat's index. For example
+All the types referenced above (e.g. `transformer/person-name` and `transformer/date-iso`) have their own format description registered in transformer's index. For example
 
 ```json
 {
-  "@id": "https://pandat.io/pandat/date-iso",
+  "@id": "https://transformer.io/transformer/date-iso",
   "@type": "string"
 }
 ```
@@ -310,6 +310,6 @@ All the types referenced above (e.g. `pandat/person-name` and `pandat/date-iso`)
 ### Why javascript? Why not `<favorite other platform>`?
 
 
-pandat aims to be widely adopted, easy to use for non-programers, and extremely portable. There are many other systems which are much better tuned -- or in Haskell's case, precisely the right tool -- for solving this particular problem. However, these are unfortunately not as portable or flexible as javascript.  If having to learn obscure syntax or installing obscure platforms were prerequisites, pandat would never be adoped by most users.
+transformer aims to be widely adopted, easy to use for non-programers, and extremely portable. There are many other systems which are much better tuned -- or in Haskell's case, precisely the right tool -- for solving this particular problem. However, these are unfortunately not as portable or flexible as javascript.  If having to learn obscure syntax or installing obscure platforms were prerequisites, transformer would never be adoped by most users.
 
-Besides, pandat should be able to run on websites :)
+Besides, transformer should be able to run on websites :)
