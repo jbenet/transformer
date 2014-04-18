@@ -6,6 +6,8 @@ var conversion_defaults = {
   '@context': 'http://pandat.io/context/pandat.jsonld',
   '@type': 'Conversion',
   'invertible': true,
+  'input': [],
+  'output': []
 }
 
 function Conversion(src, inTypes, outTypes) {
@@ -31,6 +33,8 @@ function Conversion(src, inTypes, outTypes) {
   inTypes = _.map(inTypes, Type)
   outTypes = _.map(outTypes, Type)
 
+  src.input = _.map(inTypes, function(T) {return T.src['@id']});
+  src.output = _.map(outTypes, function(T) {return T.src['@id']});
 
   this.src = src;
   this.inTypes = inTypes;
