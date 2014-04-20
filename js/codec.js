@@ -3,7 +3,7 @@ var _ = require('underscore');
 module.exports = Codec
 
 var codec_defaults = {
-  '@context': 'http://pandat.io/context/pandat.jsonld',
+  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Codec',
 }
 
@@ -30,4 +30,4 @@ function Codec(src, encode, decode) {
 }
 
 function identity(a) { return a; }
-Codec.Identity = new Codec('pandat/identity-codec');
+Codec.Identity = new Codec('transformer/identity-codec');

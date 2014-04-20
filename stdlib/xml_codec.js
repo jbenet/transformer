@@ -1,11 +1,11 @@
 var fs = require('fs');
 var xml = require('xml2js');
-var pandat = require('pandat');
+var transformer = require('transformer');
 
-var XMLCodec = module.exports = new pandat.Codec({
-  '@context': 'http://pandat.io/context/pandat.jsonld',
+var XMLCodec = module.exports = new transformer.Codec({
+  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Codec',
-  '@id': 'pandat/xml'
+  '@id': 'transformer/xml'
 });
 
 XMLCodec.encode = function(obj) {
@@ -18,5 +18,5 @@ XMLCodec.decode = function(buf) {
 }
 
 XMLCodec.onError = function(err) {
-  throw new Exception('pandat codec: failed to decode. ' + err)
+  throw new Error('xml codec: failed to decode. ' + err)
 }

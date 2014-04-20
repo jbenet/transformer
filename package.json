@@ -1,5 +1,5 @@
 {
-  "name": "pandat",
+  "name": "transformer",
   "version": "0.0.0",
   "description": "multiformat conversion",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/jbenet/pandat.git"
+    "url": "http://github.com/jbenet/transformer.git"
   },
   "keywords": [
     "dat",
@@ -20,6 +20,6 @@
   "author": "https://github.com/jbenet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jbenet/pandat/issues"
+    "url": "https://github.com/jbenet/transformer/issues"
   }
 }

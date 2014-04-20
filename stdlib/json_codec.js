@@ -1,9 +1,9 @@
-var pandat = require('pandat');
+var transformer = require('transformer');
 
-var JSONCodec = module.exports = new pandat.Codec({
-  '@context': 'http://pandat.io/context/pandat.jsonld',
+var JSONCodec = module.exports = new transformer.Codec({
+  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Codec',
-  '@id': 'pandat/json'
+  '@id': 'transformer/json'
 });
 
 JSONCodec.encode = function(obj) {

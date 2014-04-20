@@ -4,9 +4,9 @@ var loader = require(path.join(__dirname, 'loader'));
 module.exports = Type
 
 var type_defaults = {
-  '@context': 'http://pandat.io/context/pandat.jsonld',
+  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Type',
-  'codec': 'pandat/identity-codec'
+  'codec': 'transformer/identity-codec'
 }
 
 function Type (src) {

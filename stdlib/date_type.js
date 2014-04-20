@@ -1,14 +1,14 @@
-var pandat = require('pandat');
+var transformer = require('transformer');
 
-var DateType = module.exports = new pandat.Type({
-  '@id': 'pandat/date',
+var DateType = module.exports = new transformer.Type({
+  '@id': 'transformer/date',
   'schema': 'string',
 });
 
 
 // iso is native date encoding. this is here just in case that changes.
-var ISODateCodec = new pandat.Codec({
-  '@id': 'pandat/date-iso-codec'
+var ISODateCodec = new transformer.Codec({
+  '@id': 'transformer/date-iso-codec'
 })
 
 ISODateCodec.encode = function(str) {
@@ -20,8 +20,8 @@ ISODateCodec.decode = function(raw) {
 }
 
 
-var UnixTimeCodec = new pandat.Codec({
-  '@id': 'pandat/date-unixtime-codec'
+var UnixTimeCodec = new transformer.Codec({
+  '@id': 'transformer/date-unixtime-codec'
 })
 
 UnixTimeCodec.encode = function(str) {

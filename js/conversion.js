@@ -3,7 +3,7 @@ var _ = require('underscore');
 module.exports = Conversion
 
 var conversion_defaults = {
-  '@context': 'http://pandat.io/context/pandat.jsonld',
+  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Conversion',
   'invertible': true,
   'input': [],
@@ -44,9 +44,9 @@ function Conversion(src, inTypes, outTypes) {
 }
 
 function notImplemented() {
-  throw new Exception('Conversion not implemented.');
+  throw new Error('Conversion not implemented.');
 }
 
 function uninvertible() {
-  throw new Exception('Uninvertible conversion inversion invoked.');
+  throw new Error('Uninvertible conversion inversion invoked.');
 }
