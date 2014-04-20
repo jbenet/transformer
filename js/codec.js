@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var Object = require(path.join(__dirname, 'object'));
 
 module.exports = Codec
 
@@ -14,15 +15,7 @@ function Codec(src, encode, decode) {
   if (!(this instanceof Codec))
     return new Codec(src, code, decode);
 
-  if (!_.isObject(src))
-    throw new Exception('TypeError: expected Type object. ' + src)
-
-  if (!_.isString(src["@id"]) || !(src["@id"].length > 0))
-    throw new Exception('id must be a nonempty string. Got '+id);
-
-  // copy for modification
-  src = _.extend({}, codec_defaults, src)
-
+  src = Object(src, codec_defaults);
 
   this.src = src;
   this.encode = encode || identity;

@@ -1,37 +1,46 @@
 var _ = require('underscore');
-var Type = require(path.join(__dirname, 'type'));
-var Codec = require(path.join(__dirname, 'codec'));
-
 module.exports = Loader;
+
+// id format: <namespace>/<name>
+//
 
 function Loader(id) {
   if (!_.isString(id) || !(id.length > 0))
-    throw new Exception('id must be a nonempty string. Got '+id);
+    throw new Error('id must be a nonempty string. Got '+id);
 
-  src = Loader.load_src(id);
-  if (!_.isObject(src))
-    throw new Exception('TypeError: expected object. Got ' + src)
-
-  switch(src["@type"]) {
-  case "Type":
-    return new Type(src);
-  case "Codec":
-    return new Codec(src);
-  default:
-    throw new Exception("Loaded unknown type: " + src["@type"]);
-  }
-
-
-  // copy for modification
-  src = _.copy(src)
-
-  // if not a full type, just schema, wrap it.
-  if (!src['schema'])
-    src = {'schema': src};
-
-  // fill in defaults
-  _.defaults(src, defaults)
-
-  this.src = src;
-  this.codec = loader(src.codec);
+  if (!Loader.cache[id])
+    Loader.cache[id] = Loader.LoadFromNpm(id)
+  return Loader.cache[id]
 }
+
+Loader.cache = {}
+
+Loader.LoadFromNpm = function (id) {
+  if (id.search('/') == -1)
+    id = 'transformer/' + id
+
+  name = Loader.NpmName(id)
+  return require(name);
+}
+
+Loader.NpmName = function(id) {
+  return 'transformer-' + id.toLowerCase().replace('/', '-');
+}
+
+/*
+// types: transformer-type-<type>
+// codecs: transformer-codec-<name>
+// conversions: transformer-<type>-to-<type>
+Loader.NpmName = function(id, type) {
+  name = id.split('/')[1]
+  switch (type) {
+  case 'Type':
+    return 'transformer-type-' + name
+  case 'Codec':
+    return 'transformer-codec-' + name
+  case 'Conversion':
+    return 'transformer-' + name
+  }
+  throw new Error('Transformer npm name: unknown type.')
+}
+*/
