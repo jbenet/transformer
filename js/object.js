@@ -1,7 +1,12 @@
+var path = require('path');
 var _ = require('underscore');
 var loader = require(path.join(__dirname, 'loader'));
 
 module.exports = Object
+
+var obj_defaults = {
+  '@context': 'http://transformer.io/context/transformer.jsonld'
+}
 
 function Object(src, defaults) {
   if (_.isString(src))
@@ -14,7 +19,7 @@ function Object(src, defaults) {
     throw new Error('id must be a nonempty string. Got '+ src["@id"]);
 
   // copy for modification
-  src = _.extend({}, defaults, src)
+  src = _.extend({}, obj_defaults, defaults, src)
 
   return src
 }

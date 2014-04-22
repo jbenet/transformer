@@ -1,10 +1,10 @@
+var path = require('path');
 var _ = require('underscore');
 var Object = require(path.join(__dirname, 'object'));
 
 module.exports = Codec
 
 var codec_defaults = {
-  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Codec',
 }
 

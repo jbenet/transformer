@@ -1,3 +1,4 @@
+var path = require('path');
 var _ = require('underscore');
 var loader = require(path.join(__dirname, 'loader'));
 var Object = require(path.join(__dirname, 'object'));
@@ -5,7 +6,6 @@ var Object = require(path.join(__dirname, 'object'));
 module.exports = Type
 
 var type_defaults = {
-  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Type',
   'codec': 'transformer/identity-codec'
 }
