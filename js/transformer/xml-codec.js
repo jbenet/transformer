@@ -3,9 +3,9 @@ var xml = require('xml2js');
 var transformer = require('transformer');
 
 var XMLCodec = module.exports = new transformer.Codec({
-  '@context': 'http://transformer.io/context/transformer.jsonld',
-  '@type': 'Codec',
-  '@id': 'transformer/xml'
+  // @context and @type filled in automatically.
+  '@id': 'transformer/xml-codec',
+  'description': 'serializes to/from xml'
 });
 
 XMLCodec.encode = function(obj) {
