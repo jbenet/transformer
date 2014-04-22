@@ -1,11 +1,11 @@
 var _ = require('underscore');
+var path = require('path');
 var Object = require(path.join(__dirname, 'object'));
 var Type = require(path.join(__dirname, 'type'));
 
 module.exports = Conversion
 
 var conversion_defaults = {
-  '@context': 'http://transformer.io/context/transformer.jsonld',
   '@type': 'Conversion',
   'invertible': true,
   'input': [],

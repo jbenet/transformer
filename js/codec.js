@@ -23,4 +23,3 @@ function Codec(src, encode, decode) {
 }
 
 function identity(a) { return a; }
-Codec.Identity = new Codec('transformer/identity-codec');

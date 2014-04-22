@@ -1,20 +1,21 @@
-var transformer = require('transformer');
 var _ = require('underscore');
+var path = require('path');
+var Codec = require(path.join(__dirname, '..', 'codec'));
 
 // iso is the native date codec.
-var Codec = new transformer.Codec({
+var ISODateCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
   '@id': 'transformer/iso-date-codec',
   'description': 'ISO 8601 date format: 2006-01-02T15:04:05Z07:00'
 });
 
-Codec.encode = function(input) {
+ISODateCodec.encode = function(input) {
   if (!(date instanceof Date))
     throw new Error('TypeError: input must be a Date object.')
   return input.
 }
 
-Codec.decode = function(input) {
+ISODateCodec.decode = function(input) {
   if (!_.isString(input))
     throw new Error('TypeError: input must be a String.')
   return input

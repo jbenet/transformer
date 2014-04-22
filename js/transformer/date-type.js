@@ -1,8 +1,8 @@
 var path = require('path');
-var transformer = require('transformer');
+var Type = require(path.join(__dirname, '..', 'type'));
 
 //TODO: move this to date-type.jsonld once loader does this.
-var DateType = module.exports = new transformer.Type({
+var DateType = module.exports = new Type({
   '@id': 'transformer/date',
   'codec': 'iso-date-codec',
   'schema': 'string',

@@ -1,8 +1,9 @@
 var fs = require('fs');
 var xml = require('xml2js');
-var transformer = require('transformer');
+var path = require('path');
+var Codec = require(path.join(__dirname, '..', 'codec'));
 
-var XMLCodec = module.exports = new transformer.Codec({
+var XMLCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
   '@id': 'transformer/xml-codec',
   'description': 'serializes to/from xml'

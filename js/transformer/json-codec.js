@@ -1,6 +1,7 @@
-var transformer = require('transformer');
+var path = require('path');
+var Codec = require(path.join(__dirname, '..', 'codec'));
 
-var JSONCodec = module.exports = new transformer.Codec({
+var JSONCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
   '@id': 'transformer/json-codec',
   'description': 'serializes to/from json'

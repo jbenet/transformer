@@ -1,15 +1,16 @@
-var transformer = require('transformer');
+var path = require('path');
+var Codec = require(path.join(__dirname, '..', 'codec'));
 
-var Codec = module.exports = new transformer.Codec({
+var IdentityCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
   '@id': 'transformer/identity-codec',
   'description': 'default codec; does nothing'
 });
 
-Codec.encode = function(obj) {
+IdentityCodec.encode = function(obj) {
   return obj;
 }
 
-Codec.decode = function(buf) {
+IdentityCodec.decode = function(buf) {
   return buf;
 }
