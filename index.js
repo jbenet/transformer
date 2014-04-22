@@ -1,3 +1,4 @@
+var path = require('path');
 var Type = require(path.join(__dirname, 'js', 'type'));
 var Codec = require(path.join(__dirname, 'js', 'codec'));
 var Conversion = require(path.join(__dirname, 'js', 'conversion'));
