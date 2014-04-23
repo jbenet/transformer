@@ -26,3 +26,11 @@ function Type (src) {
   this.src = src;
   this.codec = Loader(src.codec);
 }
+
+Type.prototype.decode = function() {
+  return this.codec.decode.apply(this.codec, arguments);
+}
+
+Type.prototype.encode = function() {
+  return this.codec.encode.apply(this.codec, arguments);
+}
