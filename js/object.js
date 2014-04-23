@@ -1,6 +1,5 @@
 var path = require('path');
 var _ = require('underscore');
-var loader = require(path.join(__dirname, 'loader'));
 
 module.exports = Object
 
@@ -9,9 +8,6 @@ var obj_defaults = {
 }
 
 function Object(src, defaults) {
-  if (_.isString(src))
-    src = loader(src);
-
   if (!_.isObject(src))
     throw new Error('TypeError: expected object definition. ' + src)
 

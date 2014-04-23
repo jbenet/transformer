@@ -1,6 +1,6 @@
 var path = require('path');
 var _ = require('underscore');
-var loader = require(path.join(__dirname, 'loader'));
+var Loader = require(path.join(__dirname, 'loader'));
 var Object = require(path.join(__dirname, 'object'));
 
 module.exports = Type
@@ -24,5 +24,5 @@ function Type (src) {
   src = Object(src, type_defaults);
 
   this.src = src;
-  this.codec = loader(src.codec);
+  this.codec = Loader(src.codec);
 }
