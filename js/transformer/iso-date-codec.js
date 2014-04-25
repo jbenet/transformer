@@ -35,7 +35,7 @@ if (!Date.prototype.toISOString) {
     return this.getUTCFullYear()
       + '-' + pad( this.getUTCMonth() + 1 )
       + '-' + pad( this.getUTCDate() )
-      + ' ' + pad( this.getUTCHours() )
+      + 'T' + pad( this.getUTCHours() )
       + ':' + pad( this.getUTCMinutes() )
       + ':' + pad( this.getUTCSeconds() )
       + '.' + String( (this.getUTCMilliseconds()/1000).toFixed(3) )
