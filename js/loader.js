@@ -1,4 +1,3 @@
-var path = require('path');
 var _ = require('underscore');
 module.exports = Loader;
 
@@ -27,8 +26,7 @@ Loader.LoadId = function(id) {
 
   if (namespace == 'transformer') {
     // should be in stdlib
-    filename = name + '.js'
-    return require(path.join(__dirname, 'transformer', filename));
+    return require('./transformer/'+name);
   }
 
   // try npm

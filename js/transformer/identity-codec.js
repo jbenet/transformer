@@ -1,5 +1,4 @@
-var path = require('path');
-var Codec = require(path.join(__dirname, '..', 'codec'));
+var Codec = require('../codec');
 
 var IdentityCodec = module.exports = new Codec({
   // @context and @type filled in automatically.

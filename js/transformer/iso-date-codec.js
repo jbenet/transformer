@@ -1,6 +1,5 @@
 var _ = require('underscore');
-var path = require('path');
-var Codec = require(path.join(__dirname, '..', 'codec'));
+var Codec = require('../codec');
 
 // iso is the native date codec.
 var ISODateCodec = module.exports = new Codec({

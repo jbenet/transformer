@@ -1,8 +1,7 @@
-var path = require('path');
-var Type = require(path.join(__dirname, 'js', 'type'));
-var Codec = require(path.join(__dirname, 'js', 'codec'));
-var Conversion = require(path.join(__dirname, 'js', 'conversion'));
-var Loader = require(path.join(__dirname, 'js', 'loader'));
+var Type = require('./js/type');
+var Codec = require('./js/codec');
+var Conversion = require('./js/conversion');
+var Loader = require('./js/loader');
 var _ = require('underscore');
 
 module.exports = transformer

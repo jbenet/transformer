@@ -1,7 +1,6 @@
 var _ = require('underscore');
-var path = require('path');
-var Object = require(path.join(__dirname, 'object'));
-var Type = require(path.join(__dirname, 'type'));
+var Object = require('./object');
+var Type = require('./type');
 
 module.exports = Conversion
 

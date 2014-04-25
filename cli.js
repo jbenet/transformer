@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 var rw = require('rw');
-var path = require('path')
-var transformer = require(__dirname);
+var transformer = require('./');
 
 var log = console.log;
 

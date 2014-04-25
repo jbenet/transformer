@@ -1,5 +1,6 @@
 var transformer = require('./index');
 var colors = require('colors');
+
 var log = console.log;
 
 var convert = function(a, b, data) {

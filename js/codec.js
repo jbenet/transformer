@@ -1,6 +1,5 @@
-var path = require('path');
 var _ = require('underscore');
-var Object = require(path.join(__dirname, 'object'));
+var Object = require('./object');
 
 module.exports = Codec
 

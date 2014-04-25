@@ -1,5 +1,4 @@
-var path = require('path');
-var Type = require(path.join(__dirname, '..', 'type'));
+var Type = require('../type');
 
 //TODO: move this to date-type.jsonld once loader does this.
 var DateType = module.exports = new Type({

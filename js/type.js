@@ -1,7 +1,6 @@
-var path = require('path');
 var _ = require('underscore');
-var Loader = require(path.join(__dirname, 'loader'));
-var Object = require(path.join(__dirname, 'object'));
+var Loader = require('./loader');
+var Object = require('./object');
 
 module.exports = Type
 
