@@ -1,23 +1,7 @@
-var fs = require('fs');
-var xml = require('xml2js');
 var path = require('path');
-var Codec = require(path.join(__dirname, '..', 'codec'));
+var Loader = require(path.join(__dirname, '..', 'loader'));
 
-var XMLCodec = module.exports = new Codec({
-  // @context and @type filled in automatically.
-  '@id': 'transformer/xml-codec',
-  'description': 'serializes to/from xml'
-});
+// XML is not directly importable to json. you have to pick something
+// more concrete, like jsonml-xml-codec, or sax-xml-codec.
 
-XMLCodec.encode = function(obj) {
-  var builder = new xml.Builder();
-  return builder.buildObject(obj);
-}
-
-XMLCodec.decode = function(buf) {
-  return xml.parseString(buf, XMLCodec.onError);
-}
-
-XMLCodec.onError = function(err) {
-  throw new Error('xml codec: failed to decode. ' + err)
-}
+module.exports = Loader('jsonml-xml-codec')
