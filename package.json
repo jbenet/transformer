@@ -29,6 +29,8 @@
     "colors": "~0.6.2"
   },
   "dependencies": {
-    "rw": "0.0.4"
+    "rw": "0.0.4",
+    "underscore": "~1.6.0",
+    "jsxml": "0.0.2"
   }
 }
