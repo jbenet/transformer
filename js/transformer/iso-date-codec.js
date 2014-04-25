@@ -9,16 +9,16 @@ var ISODateCodec = module.exports = new Codec({
   'description': 'ISO 8601 date format: 2006-01-02T15:04:05Z07:00'
 });
 
-ISODateCodec.encode = function(input) {
+ISODateCodec.encode = function(date) {
   if (!(date instanceof Date))
     throw new Error('TypeError: input must be a Date object.')
-  return input.
+  return date.toISOString();
 }
 
-ISODateCodec.decode = function(input) {
-  if (!_.isString(input))
+ISODateCodec.decode = function(buf) {
+  if (!_.isString(buf))
     throw new Error('TypeError: input must be a String.')
-  return input
+  return new Date(buf);
 }
 
 // polyfill the toISOString function
