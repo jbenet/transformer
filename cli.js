@@ -4,6 +4,7 @@ var rw = require('rw');
 var S = require('string');
 var _ = require('underscore');
 var transformer = require('./');
+var argv = require('minimist')(process.argv.slice(2));
 
 var log = console.log;
 
@@ -12,6 +13,10 @@ function usage() {
   log('Usage: ' + n + ' <in-type-id> <out-type-id> < <in-file> > <out-file>');
 };
 
+function print_src(id) {
+  var m = transformer.load(argv.src);
+  log(m.src);
+}
 
 function convert(in_id, out_id  ){
   if (!(in_id && out_id)) {
@@ -54,7 +59,12 @@ use the --install-deps flag:\n\
 
 function main() {
 
-  convert(argv._[0], argv._[1]);
+  if (argv.src) { // is it print src?
+    print_src(argv.src);
+  }
+  else { // seems to be a conversion
+    convert(argv._[0], argv._[1]);
+  }
 }
 
 

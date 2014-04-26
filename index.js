@@ -81,6 +81,8 @@ transformer.coerce_object = function(obj) {
   throw new Error('transformer: unknown input object.');
 }
 
+transformer.load = Loader;
+
 transformer.Type = Type;
 transformer.Codec = Codec;
 transformer.Conversion = Conversion;
