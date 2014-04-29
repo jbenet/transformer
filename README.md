@@ -50,15 +50,15 @@ var b_data = transformer(formatA, formatB, a_data);
 For example:
 
 ```js
-// convert unix time to iso date
+// convert unixtime date to iso date
 var transformer = require('transformer');
-var unix2iso = transformer('date-unixtime','date-iso')
+var unix2iso = transformer('unix-time','iso-date')
 var unix = 1397788143
 var iso = unix2iso(unix)
 //'2014-04-18T02:29:03'
 
-// convert iso date to unix time
-var iso2unix = transformer('date-iso','date-unixtime')
+// convert iso date to unixtime date
+var iso2unix = transformer('iso-date','unix-time')
 var unix2 = iso2unix(iso)
 // 1397788143
 ```
@@ -228,11 +228,11 @@ The input type for the contacts:
 
 ```json
 {
-  "codec": "transformer/json",
+  "codec": "json",
   "schema": [ {
-    "name": "transformer/person-name",
-    "email": "transformer/email",
-    "phone": "transformer/phone-number-usa-dotted"
+    "name": "person-name",
+    "email": "email-address",
+    "phone": "phone-number-usa-dotted"
   } ]
 }
 ```
@@ -242,13 +242,13 @@ The input type for the call records:
 
 ```json
 {
-  "codec": "transformer/csv",
+  "codec": "csv",
   "schema": {
-    "FROM": "transformer/phone-number-usa-parens",
-    "TO": "transformer/phone-number-usa-parens",
-    "DATE": "transformer/date",
-    "TIME": "transformer/time-of-day",
-    "DURATION": "transformer/time-hms",
+    "FROM": "phone-number-usa-parens",
+    "TO": "phone-number-usa-parens",
+    "DATE": "date",
+    "TIME": "time-of-day",
+    "DURATION": "time-hms",
   }
 }
 ```
@@ -257,13 +257,13 @@ The input type for the location records:
 
 ```json
 {
-  "codec": "transformer/xml",
+  "codec": "xml",
   "schema": {
     "readings": [ {
       "reading": {
-        "lat": "transformer/latitude",
-        "lon": "transformer/longitude",
-        "time": "transformer/date-iso"
+        "lat": "latitude",
+        "lon": "longitude",
+        "time": "iso-date"
       }
     } ]
   }
@@ -274,15 +274,15 @@ The output type you want:
 
 ```json
 {
-  "codec": "transformer/xml",
+  "codec": "xml",
   "schema": {
-    "owner": "transformer/phone-number-usa-dotted",
+    "owner": "phone-number-usa-dotted",
     "history": [ {
-      "to": "transformer/person-name",
-      "from": "transformer/person-name",
-      "number": "transformer/phone-number-usa-dotted",
-      "date": "transformer/date-iso-space",
-      "location": "transformer/us-city-name"
+      "to": "person-name",
+      "from": "person-name",
+      "number": "phone-number-usa-dotted",
+      "date": "iso-date-space",
+      "location": "us-city-name"
     } ]
   }
 }
@@ -292,11 +292,11 @@ Each of the `transformer/<name>` `@types` are transformer modules that link tran
 
 ### the conversions
 
-All the types referenced above (e.g. `transformer/person-name` and `transformer/date-iso`) have their own format description registered in transformer's index. For example
+All the types referenced above (e.g. `transformer/person-name` and `transformer/iso-date`) have their own format description registered in transformer's index. For example
 
 ```json
 {
-  "@id": "https://transformer.io/transformer/date-iso",
+  "@id": "https://transformer.io/transformer/iso-date",
   "@type": "string"
 }
 ```
