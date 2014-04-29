@@ -11,6 +11,17 @@ var conversion_defaults = {
   'output': []
 }
 
+// A Conversion is one of the three Transformer kinds.
+// Conversions are functions that map from one set of Types to another.
+// They "transform" source types into target types.
+
+// Some Conversions are invertible -- meaning they are one-to-one and can be
+// "undone" or reverted (e.g. email-ddress <---> mailto-url). This is only
+// when there is no information loss.
+
+// Other Conversions are lossy -- meaning reduce information, are one-way,
+// and cannot be "undone" perfectly (e.g. us-street-address ---> us-zip-code).
+
 function Conversion(src, inTypes, outTypes) {
   if (src instanceof Conversion)
     return src;

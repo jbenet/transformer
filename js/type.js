@@ -9,6 +9,20 @@ var type_defaults = {
   'codec': 'transformer/identity-codec'
 }
 
+// A Type is one of the three Transformer kinds.
+// Types are descriptions of kinds of objects. They uniquely identify
+// a "kind", "type", or "category" of data. If raw data is just a bunch of
+// bytes, Types give that data semantic meaning.
+// (e.g. number, text, date, email-address, phone-number, geometry)
+
+// Types are very simple, expressed as json-ld documents that giving the type
+// a simple, meaningful name. Some type descriptions include default codecs.
+
+// Types are the way we give data semantic meaning. Types are related (linked)
+// to Codecs and Conversions. Transformer leverages this to simplify
+// transforming one stream of bytes into another.
+
+
 function Type (src) {
   if (src instanceof Type)
     return src;
