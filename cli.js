@@ -45,11 +45,6 @@ To install them, run:\n\
   # globally (you may need to sudo)\n\
   npm install -g <%= modules.join(' ') %>\n\
 \n\
-Or, if you want transformer to automatically install dependencies for you,\n\
-use the --install-deps flag:\n\
-\n\
-  transform --install-deps ...\n\
-  transform --install-deps-global ...\n\
 ");
 
   log(tmpl({ modules: modules }));
