@@ -18,5 +18,5 @@ var convert = function(a, b, data) {
   log('');
 };
 
-convert('jsonml-xml-codec', 'json-codec', '<foo>bar</foo>');
-convert('unix-time-date-codec', 'iso-date-codec', 1398408254);
+convert('jsonml', 'json', '<foo>bar</foo>');
+convert('unix-time', 'iso-date', 1398408254);

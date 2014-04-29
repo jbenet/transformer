@@ -2,7 +2,7 @@ var Codec = require('../codec');
 
 var JSONCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
-  '@id': 'transformer/json-codec',
+  '@id': 'transformer/json',
   'description': 'serializes to/from json'
 });
 

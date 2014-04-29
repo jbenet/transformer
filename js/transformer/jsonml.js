@@ -3,7 +3,7 @@ var jsxml = require('jsxml');
 
 var XMLCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
-  '@id': 'transformer/jsonml-xml-codec',
+  '@id': 'transformer/jsonml',
   'description': 'serializes to/from xml (jsonml)'
 });
 

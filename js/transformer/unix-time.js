@@ -3,7 +3,7 @@ var Codec = require('../codec');
 
 var UTDCodec = module.exports = new Codec({
   // @context and @type filled in automatically.
-  '@id': 'transformer/unix-time-date-codec',
+  '@id': 'transformer/unix-time',
   'description': 'Unix time date format: number of seconds since unix epoch.'
 });
 
