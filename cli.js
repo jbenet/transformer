@@ -27,7 +27,7 @@ function convert(in_id, out_id  ){
   var in2out = transformer(in_id, out_id);
 
   // for now use rw module with Sync. TODO: streams.
-  var input = rw.readSync('/dev/stdin', 'utf8').trim();
+  var input = rw.readSync('/dev/stdin', 'utf8').trim(); // could cause bugs...
   var output = in2out(input);
   rw.writeSync('/dev/stdout', '' + output + '\n', 'utf8');
 }
