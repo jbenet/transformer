@@ -15,7 +15,7 @@ function usage() {
 
 function print_src(id) {
   var m = transformer.load(argv.src);
-  log(m.src);
+  log(JSON.stringify(m.src, undefined, 1));
 }
 
 function convert(ids) {
