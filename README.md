@@ -16,14 +16,31 @@ Install transformer globally:
     npm install -g transformer
 
 
-Convert a file between two formats:
+Convert data between two formats:
 
-    transform <FormatA> <FormatB> < <FileA> > <FileB>
+```
+# transform <typeA> <typeB> < <dataA> > <dataB>
+> echo 1398810849 | transform unix-time iso-date
+2014-04-29T22:34:09.000Z
 
+> echo 2130706433 | transform ip-address-int ip-address
+127.0.0.1
+```
 
-Show schema for format:
+Show description for type:
 
-    transform <FormatA>
+```
+# transform --src <type>
+> transform --src iso-date
+{
+ "@context": "http://transformer.io/context/transformer.jsonld",
+ "@type": "Codec",
+ "@id": "transformer/iso-date",
+ "description": "ISO 8601 date format: 2006-01-02T15:04:05Z07:00"
+}
+```
+
+Boom.
 
 
 ### transformer from javascript
