@@ -18,13 +18,14 @@ function print_src(id) {
   log(m.src);
 }
 
-function convert(in_id, out_id  ){
-  if (!(in_id && out_id)) {
+function convert(ids) {
+  if (!(ids.length > 1)) {
     usage();
     process.exit(-1);
   }
 
-  var in2out = transformer(in_id, out_id);
+  // transformer chain
+  var in2out = transformer.compose(ids);
 
   // for now use rw module with Sync. TODO: streams.
   var input = rw.readSync('/dev/stdin', 'utf8').trim(); // could cause bugs...
@@ -58,7 +59,7 @@ function main() {
     print_src(argv.src);
   }
   else { // seems to be a conversion
-    convert(argv._[0], argv._[1]);
+    convert(argv._);
   }
 }
 

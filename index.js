@@ -56,6 +56,16 @@ transformer.transform = function(from, to, data_from) {
   return transformer.transformer(from, to)(data_from);
 }
 
+transformer.compose = function(types) {
+  var pairs = _.zip(types.slice(0, types.length - 1), types.slice(1));
+  var transformers = _.map(pairs, function(pair) {
+    // console.log(pair);
+    return transformer.transformer(pair[0], pair[1]);
+  });
+
+  return _.compose.apply(_, transformers.reverse());
+}
+
 transformer.coerce_object = function(obj) {
   // string? load module.
   if (_.isString(obj))
