@@ -13,7 +13,7 @@ transformer development is just beginning. Star/watch the project to find out wh
 
 Install transformer globally:
 
-    npm install -g transformer
+    npm install -g dat-transformer
 
 
 Convert data between two formats:
