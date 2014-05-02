@@ -8,7 +8,7 @@ module.exports = Conversion
 
 var conversion_defaults = {
   'type': 'Conversion',
-  'invertible': true,
+  // 'invertible': true,
   'input': [],
   'output': []
 }
