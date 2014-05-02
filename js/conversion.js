@@ -92,16 +92,25 @@ Conversion.convertFromSchema = function(src) {
 
 Conversion.withTypes = function(t1, t2) {
 
-  if (t1.src.schema == t2.src.id || t2.src.schema == t1.src.id) {
-    return function (d) { return d };
-  }
-
   function loadConversion(t1, t2) {
     return coerce(t1.src.id + '-to-'+ t2.src.id);
   }
 
-  // Bypass entire symmetric loading for now.
-  return loadConversion(t1, t2);
+  try {
+    return loadConversion(t1, t2);
+  } catch (e1) {
+
+    // if no conversion exists, try to figure it out.
+    if (e1.code == 'MODULE_NOT_FOUND') {
+      if (t1.src.schema == t2.src.id ||
+          t2.src.schema == t1.src.id ||
+          t1.src.schema == t2.src.schema ||
+          t1.src.id == t2.src.id) {
+        return function (d) { return d };
+      }
+    }
+    throw e1;
+  }
 
   /*
   // Symmetric Loading
