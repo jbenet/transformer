@@ -45,15 +45,12 @@ Loader.NpmName = function(id) {
 
 /*
 // types: transformer-type-<type>
-// codecs: transformer-codec-<name>
 // conversions: transformer-<type>-to-<type>
 Loader.NpmName = function(id, type) {
   name = id.split('/')[1]
   switch (type) {
   case 'Type':
     return 'transformer-type-' + name
-  case 'Codec':
-    return 'transformer-codec-' + name
   case 'Conversion':
     return 'transformer-' + name
   }

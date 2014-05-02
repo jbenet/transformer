@@ -1,7 +1,8 @@
 var Type = require('./js/type');
-var Codec = require('./js/codec');
+var Value = require('./js/value');
 var Conversion = require('./js/conversion');
 var Loader = require('./js/loader');
+var coerce = require('./js/coerce');
 var _ = require('underscore');
 
 module.exports = transformer
@@ -23,31 +24,30 @@ function transformer(from, to, data_from) {
 }
 
 
+// transformer is one of the main API methods. it returns a function that
+// can be directly applied to data.
+
+// (wraps raw data with a Value).
 transformer.transformer = function(from, to) {
-  from = transformer.coerce_object(from);
-  to = transformer.coerce_object(to);
+  var t = transformer._transformer(from, to);
+  return Value.wrap(from, t);
+}
 
-  if (!(from instanceof Type || from instanceof Codec)) {
-    throw new Error('conversion source must be Type or Codec.');
-  }
+// internal transformer creation function.
+transformer._transformer = function(from, to) {
+  from = coerce(from);
+  to = coerce(to);
 
-  if (!(to instanceof Type || to instanceof Codec)) {
-    throw new Error('conversion target must be Type or Codec.');
-  }
+  Type.check(from);
+  Type.check(to);
 
-  // default to no conversion. (from or to is codec).
-  var convert = function(input) { return input; }
+  var convert = Conversion.withTypes(from, to);
 
-  // if from && to are Types, find their conversion function.
-  if (from instanceof Type && to instanceof Type) {
-    // not implemented yet.
-  }
-
-  return function(input_data) {
-    var d = from.decode(input_data);
-    var c = convert(d);
-    var e = to.encode(c);
-    return e;
+  return function(input) {
+    Type.check(input.type, from);
+    var output = convert(input);
+    Type.check(output.type, to);
+    return output;
   }
 }
 
@@ -57,43 +57,19 @@ transformer.transform = function(from, to, data_from) {
 }
 
 transformer.compose = function(types) {
+
   var pairs = _.zip(types.slice(0, types.length - 1), types.slice(1));
   var transformers = _.map(pairs, function(pair) {
-    // console.log(pair);
-    return transformer.transformer(pair[0], pair[1]);
+    return transformer._transformer(pair[0], pair[1]);
   });
 
-  return _.compose.apply(_, transformers.reverse());
+  var composed = _.compose.apply(_, transformers.reverse());
+  return Value.wrap(types[0], composed); // wrap/unwrap Value
 }
 
-transformer.coerce_object = function(obj) {
-  // string? load module.
-  if (_.isString(obj))
-    return Loader(obj);
-
-  // transformer object? all good.
-  if (obj instanceof Type ||
-      obj instanceof Codec ||
-      obj instanceof Conversion) {
-    return obj;
-  }
-
-  // raw object with @type? construct.
-  if (_.isObject(obj) && obj['@type']) {
-    switch (obj['@type']) {
-    case 'Type': return Type(obj);
-    case 'Codec': return Codec(obj);
-    case 'Conversion': return Conversion(obj);
-    }
-  }
-
-  // wat?
-  throw new Error('transformer: unknown input object.');
-}
-
+transformer.coerce = coerce;
 transformer.load = Loader;
 
 transformer.Type = Type;
-transformer.Codec = Codec;
 transformer.Conversion = Conversion;
 transformer.Loader = Loader;
