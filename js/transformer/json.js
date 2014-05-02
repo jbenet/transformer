@@ -1,15 +1,7 @@
-var Codec = require('../codec');
+var Type = require('../type');
 
-var JSONCodec = module.exports = new Codec({
-  // @context and type filled in automatically.
+module.exports = new Type({
   'id': 'json',
-  'description': 'serializes to/from json'
+  'description': 'JSON - JavaScript Object Notation portable format.',
+  'schema': 'json',
 });
-
-JSONCodec.encode = function(obj) {
-  return JSON.stringify(obj);
-}
-
-JSONCodec.decode = function(buf) {
-  return JSON.parse(buf);
-}
