@@ -34,7 +34,6 @@ Show description for type:
 > transform --src iso-date
 {
  "@context": "http://transformer.io/context/transformer.jsonld",
- "type": "Codec",
  "id": "transformer/iso-date",
  "description": "ISO 8601 date format: 2006-01-02T15:04:05Z07:00"
 }
@@ -153,7 +152,7 @@ The secret sauce is in the shared library of (a) types, (b) conversion functions
 
 ## transformer formats -- an example
 
-How does transformer know what formats are? It has a large library of Types (formats), Codecs, and Conversion functions. These compose. They are specified using JSON-LD documents and javascript code (codecs and conversions).
+How does transformer know what formats are? It has a large library of Types (formats), and Conversion functions. These compose. They are specified using JSON-LD documents and javascript code (conversions).
 
 ### the data
 
@@ -291,7 +290,7 @@ The output type you want:
 
 ```json
 {
-  "codec": "xml",
+  "codec": "json",
   "schema": {
     "owner": "phone-number-usa-dotted",
     "history": [ {
@@ -305,7 +304,7 @@ The output type you want:
 }
 ```
 
-Each of the `transformer/<name>` `types` are transformer modules that link transformer objects and allow transformer to find the relevant functions. The `transformer/` part here shows anyone can publish new codecs or types to transformer's index.
+Each of the `transformer/<name>` `types` are transformer modules that link transformer objects and allow transformer to find the relevant functions. The `transformer/` part here shows anyone can publish new conversions or types to transformer's index.
 
 ### the conversions
 
