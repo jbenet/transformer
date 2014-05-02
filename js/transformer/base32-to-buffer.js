@@ -1,4 +1,4 @@
-var base32 = require('base32')
+var base32 = require('base32');
 var Conversion = require('../conversion');
 var Loader = require('../loader');
 var Buffer = Loader('buffer');
