@@ -24,6 +24,10 @@ function convert(ids) {
     process.exit(-1);
   }
 
+  // wrap with string (because cli)
+  ids.unshift('string');
+  ids.push('string');
+
   // transformer chain
   var in2out = transformer.compose(ids);
 
