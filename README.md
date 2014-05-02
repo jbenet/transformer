@@ -83,9 +83,40 @@ var unix2 = iso2unix(iso)
 
 I'll use command-line syntax here, because it's cleaner. But everything
 is available in the command-line, in js, and (soon!) in the browser.
+Note that these examples are longer than intended, as they are the full
+pipelines of the type conversions (`string | iso-date | js-date | unix-time |
+integer | number`). Once type inference is built, this will be a lot nicer
+(see second set of examples below).
 
+```
+> echo '2014-05-02T09:51:03.000Z' | transform iso-date js-date unix-time integer number
+1399024263
 
-(Note, some of these examples don't yet work exactly. Need type inference.)
+> echo 1399024263 | transform number integer unix-time js-date iso-date
+2014-05-02T09:51:03.000Z
+
+> echo 1234.3123 | transform number integer number
+1234
+
+> echo '127.0.0.1' | transform ip-address hex
+7f000001
+
+> echo '127.0.0.1' | transform ip-address base32
+c9gq6t9k68
+
+> echo '127.0.0.1' | transform ip-address base64
+fwAAAQ==
+
+> echo 'fwAAAQ==' | transform base64 ip-address
+127.0.0.1
+
+> echo "<foo>bar</foo>" | transform xml-string json
+["foo","bar"]
+```
+
+Once https://github.com/jbenet/transformer/issues/8 is addressed, these should
+be expressible as:
+
 ```
 > echo '2014-05-02T09:51:03.000Z' | transform iso-date unix-time
 1399024263
