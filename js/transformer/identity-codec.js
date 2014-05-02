@@ -1,8 +1,8 @@
 var Codec = require('../codec');
 
 var IdentityCodec = module.exports = new Codec({
-  // @context and @type filled in automatically.
-  '@id': 'transformer/identity-codec',
+  // @context and type filled in automatically.
+  'id': 'identity-codec',
   'description': 'default codec; does nothing'
 });
 

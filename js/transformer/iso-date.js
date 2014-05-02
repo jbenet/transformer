@@ -3,8 +3,8 @@ var Codec = require('../codec');
 
 // iso is the native date codec.
 var ISODateCodec = module.exports = new Codec({
-  // @context and @type filled in automatically.
-  '@id': 'transformer/iso-date',
+  // @context and type filled in automatically.
+  'id': 'iso-date',
   'description': 'ISO 8601 date format: 2006-01-02T15:04:05Z07:00'
 });
 

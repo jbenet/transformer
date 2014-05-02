@@ -1,6 +1,6 @@
 var Type = require('../type');
 
-var IPAddressType = module.exports = new Type({
-  '@id': 'transformer/ip-address',
+module.exports = new Type({
+  'id': 'ip-address',
   'schema': 'string',
 });

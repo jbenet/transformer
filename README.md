@@ -34,8 +34,8 @@ Show description for type:
 > transform --src iso-date
 {
  "@context": "http://transformer.io/context/transformer.jsonld",
- "@type": "Codec",
- "@id": "transformer/iso-date",
+ "type": "Codec",
+ "id": "transformer/iso-date",
  "description": "ISO 8601 date format: 2006-01-02T15:04:05Z07:00"
 }
 ```
@@ -239,7 +239,7 @@ This is completely doable given format schemas and type conversions. All transfo
 
 ### the types (formats)
 
-(Common fields `[@context, @id, @type]` in formats omitted for simplicity).
+(Common fields `[@context, id, type]` in formats omitted for simplicity).
 
 The input type for the contacts:
 
@@ -305,7 +305,7 @@ The output type you want:
 }
 ```
 
-Each of the `transformer/<name>` `@types` are transformer modules that link transformer objects and allow transformer to find the relevant functions. The `transformer/` part here shows anyone can publish new codecs or types to transformer's index.
+Each of the `transformer/<name>` `types` are transformer modules that link transformer objects and allow transformer to find the relevant functions. The `transformer/` part here shows anyone can publish new codecs or types to transformer's index.
 
 ### the conversions
 
@@ -313,8 +313,8 @@ All the types referenced above (e.g. `transformer/person-name` and `transformer/
 
 ```json
 {
-  "@id": "https://transformer.io/transformer/iso-date",
-  "@type": "string"
+  "id": "https://transformer.io/transformer/iso-date",
+  "type": "string"
 }
 ```
 

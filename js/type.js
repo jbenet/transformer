@@ -5,7 +5,7 @@ var Object = require('./object');
 module.exports = Type
 
 var type_defaults = {
-  '@type': 'Type',
+  'type': 'Type',
   'codec': 'transformer/identity-codec'
 }
 

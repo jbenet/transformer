@@ -2,8 +2,8 @@ var Codec = require('../codec');
 var jsxml = require('jsxml');
 
 var XMLCodec = module.exports = new Codec({
-  // @context and @type filled in automatically.
-  '@id': 'transformer/jsonml',
+  // @context and type filled in automatically.
+  'id': 'jsonml',
   'description': 'serializes to/from xml (jsonml)'
 });
 

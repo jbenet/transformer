@@ -3,8 +3,8 @@ var ip = require('ip');
 var Codec = require('../codec');
 
 var IPCodec = module.exports = new Codec({
-  // @context and @type filled in automatically.
-  '@id': 'transformer/ip-address-ascii',
+  // @context and type filled in automatically.
+  'id': 'ip-address-ascii',
   'description': 'IP Address ascii encoding: '
 });
 
