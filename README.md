@@ -79,7 +79,38 @@ var unix2 = iso2unix(iso)
 // 1397788143
 ```
 
+### more examples
 
+I'll use command-line syntax here, because it's cleaner. But everything
+is available in the command-line, in js, and (soon!) in the browser.
+
+
+(Note, some of these examples don't yet work exactly. Need type inference.)
+```
+> echo '2014-05-02T09:51:03.000Z' | transform iso-date unix-time
+1399024263
+
+> echo 1399024263 | transform unix-time iso-date
+2014-05-02T09:51:03.000Z
+
+> echo 1234.3123 | transform integer
+1234
+
+> echo '127.0.0.1' | transform ip-address hex
+7f000001
+
+> echo '127.0.0.1' | transform ip-address base32
+c9gq6t9k68
+
+> echo '127.0.0.1' | transform ip-address base64
+fwAAAQ==
+
+> echo 'fwAAAQ==' | transform base64 ip-address
+127.0.0.1
+
+> echo "<foo>bar</foo>" | transform xml-string json
+["foo","bar"]
+```
 
 ## transformer story
 
