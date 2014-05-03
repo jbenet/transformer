@@ -98,19 +98,19 @@ integer | number`). Once type inference is built, this will be a lot nicer
 > echo 1234.3123 | transform number integer number
 1234
 
-> echo '127.0.0.1' | transform ip-address hex
+> echo '127.0.0.1' | transform ip-address buffer hex
 7f000001
 
-> echo '127.0.0.1' | transform ip-address base32
+> echo '127.0.0.1' | transform ip-address buffer base32
 c9gq6t9k68
 
-> echo '127.0.0.1' | transform ip-address base64
+> echo '127.0.0.1' | transform ip-address buffer base64
 fwAAAQ==
 
-> echo 'fwAAAQ==' | transform base64 ip-address
+> echo 'fwAAAQ==' | transform base64 buffer ip-address
 127.0.0.1
 
-> echo "<foo>bar</foo>" | transform xml-string json
+> echo "<foo>bar</foo>" | transform xml-string jsonml json
 ["foo","bar"]
 ```
 
