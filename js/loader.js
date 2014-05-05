@@ -53,7 +53,7 @@ Loader.Npmize = function(id) {
 }
 
 Loader.NpmName = function(id) {
-  return 'transformer-' + Loader.Npmize(id);
+  return 'transformer.' + Loader.Npmize(id);
 }
 
 /*
