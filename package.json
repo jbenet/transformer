@@ -37,6 +37,7 @@
     "ip": "~0.3.0",
     "npm-install": "0.0.1",
     "inherits": "~2.0.1",
-    "base32": "0.0.6"
+    "base32": "0.0.6",
+    "zippity-do-dah": "0.0.2"
   }
 }
