@@ -56,9 +56,10 @@ function Conversion(func, src, inType, outType) {
   }
 
   // return a different object, one that can be applied directly.
-  conv = function (input) {
-    var output = func(input.value); // execute the conversion
-    return new Value(outType, output);
+  conv = function (input, callback) {
+    func(input.value, function(output) {
+      callback(new Value(outType, output));
+    }); // execute the conversion
   };
 
   // label the function so it is printed meaningfully
@@ -106,7 +107,7 @@ Conversion.withTypes = function(t1, t2) {
           t2.src.schema == t1.src.id ||
           t1.src.schema == t2.src.schema ||
           t1.src.id == t2.src.id) {
-        return function (d) { return d };
+        return function (d, callback) { callback(d); };
       }
     }
     throw e1;

@@ -8,6 +8,6 @@ module.exports = new Conversion(AsciiToBase32, {
   'id': 'ascii-to-base32',
 }, Ascii, Base32);
 
-function AsciiToBase32(ascii) {
-  return base32.encode(ascii);
+function AsciiToBase32(ascii, callback) {
+  callback(base32.encode(ascii));
 }
