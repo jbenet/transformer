@@ -4,12 +4,9 @@ var Conversion = require('../conversion');
 var tString = Loader('string');
 var IPAddress = Loader('ip-address');
 
-module.exports = new Conversion(IPAddressToString, {
-  // @context and type filled in automatically.
-  'id': 'ip-address-to-string',
-}, IPAddress, tString);
+module.exports = new Conversion(IPAddress, tString, convert);
 
-function IPAddressToString(ipAddr) {
+function convert(ipAddr, callback) {
   ipAddr = ip.toString(ip.toBuffer(ipAddr)); //TODO: validate better.
-  return ipAddr; // already a string
+  callback(ipAddr); // already a string
 }

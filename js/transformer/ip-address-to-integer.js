@@ -4,10 +4,8 @@ var Loader = require('../loader');
 var Integer = Loader('integer');
 var IPAddress = Loader('ip-address');
 
-module.exports = new Conversion(IPAddressToInteger, {
-  'id': 'ip-address-to-integer',
-}, IPAddress, Integer);
+module.exports = new Conversion(IPAddress, Integer, convert);
 
-function IPAddressToInteger(ipAddress) {
-  return ip.toLong(ipAddress);
+function convert(ipAddress, callback) {
+  callback(ip.toLong(ipAddress));
 };

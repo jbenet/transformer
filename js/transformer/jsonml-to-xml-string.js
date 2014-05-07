@@ -4,10 +4,8 @@ var Loader = require('../loader');
 var JSONML = Loader('jsonml');
 var XML = Loader('xml-string');
 
-module.exports = new Conversion(JsonmlToXml, {
-  'id': 'jsonml-to-xml-string',
-}, JSONML, XML);
+module.exports = new Conversion(JSONML, XML, convert);
 
-function JsonmlToXml(jsonml) {
-  return jsxml.toXml(jsonml).toString();
+function convert(jsonml, callback) {
+  callback(jsxml.toXml(jsonml).toString());
 }

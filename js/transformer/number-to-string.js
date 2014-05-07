@@ -3,10 +3,8 @@ var Loader = require('../loader');
 var tNumber = Loader('number');
 var tString = Loader('string');
 
-module.exports = new Conversion(NumberToString, {
-  'id': 'number-to-string',
-}, tNumber, tString);
+module.exports = new Conversion(tNumber, tString, convert);
 
-function NumberToString(num) {
-  return num.toString();
+function convert(num, callback) {
+  callback(num.toString());
 };

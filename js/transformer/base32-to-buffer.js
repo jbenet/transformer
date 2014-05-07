@@ -4,10 +4,8 @@ var Loader = require('../loader');
 var Buffer = Loader('buffer');
 var tBase32 = Loader('base32');
 
-module.exports = new Conversion(Base32ToBuffer, {
-  'id': 'base32-to-buffer',
-}, tBase32, Buffer);
+module.exports = new Conversion(tBase32, Buffer, convert);
 
-function Base32ToBuffer(base32str) {
-  return base32.decode(base32str);
+function convert(base32str, callback) {
+  callback(base32.decode(base32str));
 }

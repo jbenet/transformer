@@ -4,10 +4,8 @@ var Loader = require('../loader');
 var Base32 = Loader('base32');
 var Ascii = Loader('ascii');
 
-module.exports = new Conversion(AsciiToBase32, {
-  'id': 'ascii-to-base32',
-}, Ascii, Base32);
+module.exports = new Conversion(Ascii, Base32, convert);
 
-function AsciiToBase32(ascii, callback) {
+function convert(ascii, callback) {
   callback(base32.encode(ascii));
-}
+};

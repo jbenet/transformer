@@ -4,13 +4,8 @@ var Conversion = require('../conversion');
 var Buffer = Loader('buffer');
 var IPAddress = Loader('ip-address');
 
-module.exports = new Conversion(BufferToIPAddress, {
-  // @context and type filled in automatically.
-  'id': 'buffer-to-ip-address',
-  'description': 'Buffer to IP Address conversion.',
+module.exports = new Conversion(Buffer, IPAddress, convert);
 
-}, Buffer, IPAddress);
-
-function BufferToIPAddress(ipBuffer) {
-  return ip.toString(ipBuffer);
+function convert(ipBuffer, callback) {
+  callback(ip.toString(ipBuffer));
 }
