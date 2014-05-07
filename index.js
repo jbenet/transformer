@@ -14,10 +14,12 @@ module.exports = transformer
 
 function transformer(from, to, data_from) {
   switch (arguments.length) {
-  case 3:
+  case 3: // exec conversion
     return transformer.transform(from, to, data_from);
-  case 2:
+  case 2: // find conversion
     return transformer.transformer(from, to);
+  case 1: // loading
+    return transformer.Loader(from);
   default:
     throw new Error('transformer error: incorrect arguments to transformer.')
   }
