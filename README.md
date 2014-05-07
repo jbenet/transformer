@@ -391,3 +391,8 @@ All the types referenced above (e.g. `transformer/person-name` and `transformer/
 transformer aims to be widely adopted, easy to use for non-programers, and extremely portable. There are many other systems which are much better tuned -- or in Haskell's case, precisely the right tool -- for solving this particular problem. However, these are unfortunately not as portable or flexible as javascript.  If having to learn obscure syntax or installing obscure platforms were prerequisites, transformer would never be adoped by most users.
 
 Besides, transformer should be able to run on websites :)
+
+### How do you write modules?
+
+A longer description will be available, but for now see: https://github.com/jbenet/transformer-pkg
+
