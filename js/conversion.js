@@ -67,7 +67,8 @@ function Conversion(inType, outType, func, src) {
   // return a different object, one that can be applied directly.
   conv = function (input, callback) {
     func(input.value, function(output) {
-      callback(new Value(outType, output));
+      var val = new Value(outType, output);
+      _.defer(callback, val);
     }); // execute the conversion
   };
 
