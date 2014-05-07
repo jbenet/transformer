@@ -4,11 +4,9 @@ var Zipcode = Loader('us-zipcode');
 var City = Loader('us-city');
 var zipdb = require('zippity-do-dah');
 
-module.exports = new Conversion(ZipcodeToCity, {
-  'id': 'us-zipcode-to-us-city',
-}, Zipcode, City);
+module.exports = new Conversion(Zipcode, City, convert);
 
-function ZipcodeToCity(zipcode) {
+function convert(zipcode, callback) {
   var r = zipdb.zipcode(zipcode);
-  return r.city +', '+ r.state;
+  callback(r.city +', '+ r.state);
 }

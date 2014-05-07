@@ -3,10 +3,8 @@ var Loader = require('../loader');
 var tString = Loader('string');
 var tJSON = Loader('json');
 
-module.exports = new Conversion(StringToJSON, {
-  'id': 'string-to-json',
-}, tString, tJSON);
+module.exports = new Conversion(tString, tJSON, convert);
 
-function StringToJSON(str) {
-  return JSON.parse(str);
+function convert(str, callback) {
+  callback(JSON.parse(str));
 }

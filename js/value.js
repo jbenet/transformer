@@ -22,9 +22,11 @@ function Value(type, value) {
 };
 
 Value.wrap = function valueWrap(from, func) {
-  return function(input) {
+  return function(input, callback) {
     input = new Value(from, input);
-    return func(input).value;
+    func(input, function(output) {
+      callback(output.value);
+    });
   };
 };
 

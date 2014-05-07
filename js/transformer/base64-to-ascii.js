@@ -3,10 +3,8 @@ var Loader = require('../loader');
 var Base64 = Loader('base64');
 var Ascii = Loader('ascii');
 
-module.exports = new Conversion(Base64ToAscii, {
-  'id': 'base64-to-ascii',
-}, Base64, Ascii);
+module.exports = new Conversion(Base64, Ascii, convert);
 
-function Base64ToAscii(base64str) {
-  return (new Buffer(base64str, 'base64')).toString('ascii');
+function convert(base64str, callback) {
+  callback((new Buffer(base64str, 'base64')).toString('ascii'));
 }

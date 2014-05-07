@@ -1,3 +1,4 @@
+var S = require('string');
 var _ = require('underscore');
 var Object = require('./object');
 var Type = require('./type');
@@ -32,18 +33,26 @@ var conversion_defaults = {
 
 
 
-function Conversion(func, src, inType, outType) {
-  if (src instanceof Conversion)
-    return src;
+function Conversion(inType, outType, func, src) {
 
+  // coercing call?
+  if (arguments.length == 1 && inType instanceof Conversion)
+      return src;
+
+  // want to inherit prototype
   if (!(this instanceof Conversion))
-    return new Conversion(inType, outType);
-
-  src = Object(src || {}, conversion_defaults);
+    return new Conversion(inType, outType, func, src);
 
   // instantiate types.
   inType = coerce(inType)
   outType = coerce(outType)
+
+  // setup id if not given
+  src = _.extend({}, src); // copy + default.
+  src.id = Conversion.idWithTypes(inType, outType);
+
+  // setup object src with defaults
+  src = Object(src, conversion_defaults);
 
   // get type ids
   src.input = inType.src.id;
@@ -56,13 +65,15 @@ function Conversion(func, src, inType, outType) {
   }
 
   // return a different object, one that can be applied directly.
-  conv = function (input) {
-    var output = func(input.value); // execute the conversion
-    return new Value(outType, output);
+  conv = function (input, callback) {
+    func(input.value, function(output) {
+      callback(new Value(outType, output));
+    }); // execute the conversion
   };
 
   // label the function so it is printed meaningfully
-  conv.name = src.id;
+  func.name = src.id;
+  conv.name = src.id + '.wrapper';
   conv.convert = func;
   conv.src = src;
   conv.inType = inType;
@@ -77,6 +88,19 @@ function notImplemented() {
 function uninvertible() {
   throw new Error('Uninvertible conversion inversion invoked.');
 }
+
+Conversion.idWithTypes = function(t1, t2) {
+  if (t1.src && t1.src.id)
+    t1 = t1.src.id
+
+  if (t2.src && t2.src.id)
+    t2 = t2.src.id
+
+  if (!(_.isString(t1) && _.isString(t2)))
+    throw new Error('type ids should be strings');
+
+  return t1 + '-to-' + t2;
+};
 
 Conversion.convertFromSchema = function(src) {
   if (!src['mapping'])
@@ -106,7 +130,7 @@ Conversion.withTypes = function(t1, t2) {
           t2.src.schema == t1.src.id ||
           t1.src.schema == t2.src.schema ||
           t1.src.id == t2.src.id) {
-        return function (d) { return d };
+        return function (d, callback) { callback(d); };
       }
     }
     throw e1;

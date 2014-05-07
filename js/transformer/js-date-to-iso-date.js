@@ -3,12 +3,10 @@ var Loader = require('../loader');
 var IsoDate = Loader('iso-date');
 var JsDate = Loader('js-date');
 
-module.exports = new Conversion(JsDateToIsoDate, {
-  'id': 'js-date-to-iso-date',
-}, JsDate, IsoDate);
+module.exports = new Conversion(JsDate, IsoDate, convert);
 
-function JsDateToIsoDate(jsDate) {
-  return jsDate.toISOString();
+function convert(jsDate, callback) {
+  callback(jsDate.toISOString());
 }
 
 // polyfill the toISOString function

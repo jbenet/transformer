@@ -43,17 +43,18 @@ transformer._transformer = function(from, to) {
 
   var convert = Conversion.withTypes(from, to);
 
-  return function(input) {
+  return function(input, callback) {
     Type.check(input.type, from);
-    var output = convert(input);
-    Type.check(output.type, to);
-    return output;
-  }
+    convert(input, function(output) {
+      Type.check(output.type, to);
+      callback(output);
+    });
+  };
 }
 
-transformer.transform = function(from, to, data_from) {
+transformer.transform = function(from, to, data_from, callback) {
   // create transformer + apply it.
-  return transformer.transformer(from, to)(data_from);
+  return transformer.transformer(from, to)(data_from, callback);
 }
 
 transformer.compose = function(types) {
@@ -63,7 +64,18 @@ transformer.compose = function(types) {
     return transformer._transformer(pair[0], pair[1]);
   });
 
-  var composed = _.compose.apply(_, transformers.reverse());
+  var composeTransformers = function(funcs) {
+    function composed(input) {
+      funcs.shift()(input, composed);
+    };
+
+    return function(input, callback) {
+      funcs.push(callback); // add callback to end of list.
+      composed(input, funcs);
+    };
+  };
+
+  var composed = composeTransformers(transformers);
   return Value.wrap(types[0], composed); // wrap/unwrap Value
 }
 

@@ -3,10 +3,8 @@ var Loader = require('../loader');
 var tBuffer = Loader('buffer');
 var Ascii = Loader('ascii');
 
-module.exports = new Conversion(BufferToAscii, {
-  'id': 'buffer-to-ascii',
-}, tBuffer, Ascii);
+module.exports = new Conversion(tBuffer, Ascii, convert);
 
-function BufferToAscii(buffer) {
-  return buffer.toString('ascii');
+function convert(buffer, callback) {
+  callback(buffer.toString('ascii'));
 }
