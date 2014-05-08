@@ -6,5 +6,5 @@ var tJSON = Loader('json');
 module.exports = new Conversion(tJSON, tString, convert);
 
 function convert(json) {
-  JSON.stringify(json);
+  return JSON.stringify(json);
 }
