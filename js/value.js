@@ -24,8 +24,7 @@ function Value(type, value) {
 Value.wrapSync = function valueWrapSync(from, func) {
   return function(input) {
     input = new Value(from, input);
-    var output = func(input);
-    return output.value;
+    return func(input).value;
   };
 };
 

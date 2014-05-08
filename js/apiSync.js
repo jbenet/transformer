@@ -30,6 +30,12 @@ transformerSync.compose = function(types) {
 
   types = _.map(types, coerce);
   conversions = Conversion.path(types);
-  composed = _.compose(conversions.reverse());
+
+  if (_.any(_.pluck(conversions, 'async'))) {
+    throw new Error("Cannot use Async conversion in Sync context. " +
+      " use transformer.async");
+  }
+
+  composed = _.compose.apply(_, conversions.reverse());
   return Value.wrapSync(types[0], composed);
 }
