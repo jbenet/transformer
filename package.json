@@ -1,6 +1,6 @@
 {
   "name": "dat-transformer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "multiformat conversion",
   "main": "index.js",
   "bin": {
@@ -38,6 +38,7 @@
     "npm-install": "0.0.1",
     "inherits": "~2.0.1",
     "base32": "0.0.6",
-    "zippity-do-dah": "0.0.2"
+    "zippity-do-dah": "0.0.2",
+    "npm-installer": "0.0.0"
   }
 }
