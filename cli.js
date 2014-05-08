@@ -34,7 +34,8 @@ function convert(ids) {
 
   // for now use rw module with Sync. TODO: streams.
   var input = rw.readSync('/dev/stdin', 'utf8').trim(); // could cause bugs...
-  in2out(input, function(output) {
+  in2out(input, function(err, output) {
+    if (err) throw err;
     rw.writeSync('/dev/stdout', '' + output + '\n', 'utf8');
   });
 }
