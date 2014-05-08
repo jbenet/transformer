@@ -4,6 +4,7 @@ var Object = require('./object');
 var Type = require('./type');
 var Value = require('./value');
 var coerce = require('./coerce');
+var defer = require('./defer');
 
 module.exports = Conversion
 
@@ -58,27 +59,61 @@ function Conversion(inType, outType, func, src) {
   src.input = inType.src.id;
   src.output = outType.src.id;
   src.description = src.description || src.input +' to '+ src.output;
+  if (src.async)
+    src.async = true; // force boolean. default is async = false.
 
   // if we have a 'mapping' key (relation) attempt to create func.
   if (!func && src['mapping']) {
     func = Conversion.convertFromSchema(src);
   }
 
+  if (!func)
+    throw new Error('Conversion requires a function.');
+
   // return a different object, one that can be applied directly.
-  conv = function (input, callback) {
-    func(input.value, function(output) {
-      var val = new Value(outType, output);
-      _.defer(callback, val);
-    }); // execute the conversion
-  };
+  var conv;
+  if (src.async) {
+    if (func.length != 2) {
+      err = 'async conversion '+ src.id +' should take 2 args (input, callback): '
+      throw new Error(err + func);
+    }
+
+    conv = function (input, callback) {
+      if (!callback)
+        throw new Error('Callback required. Async conversion ' + this);
+
+      func(input.value, function(err, output) {
+        // want to defer here, because user may not.
+        if (err) {
+          e = 'transformer conversion error in ' + src.id + '. '
+          defer(callback, new Error(e + err.toString()));
+        } else {
+          defer(callback, null, new Value(outType, output));
+        }
+      });
+    };
+  }
+  else {
+    if (func.length != 1) {
+      err = 'sync conversion '+ src.id +' should take 1 arg (input): '
+      throw new Error(err + func);
+    }
+
+    conv = function(input) {
+      return new Value(outType, func(input.value));
+    }
+  }
 
   // label the function so it is printed meaningfully
   func.name = src.id;
   conv.name = src.id + '.wrapper';
+  // conv.constructor = Conversion; // todo fix this
   conv.convert = func;
   conv.src = src;
   conv.inType = inType;
   conv.outType = outType;
+  conv.async = src.async;
+  func.async = src.async;
   return conv;
 }
 
@@ -131,7 +166,7 @@ Conversion.withTypes = function(t1, t2) {
           t2.src.schema == t1.src.id ||
           t1.src.schema == t2.src.schema ||
           t1.src.id == t2.src.id) {
-        return function (d, callback) { callback(d); };
+        return Conversion.Identity(t1, t2);
       }
     }
     throw e1;
@@ -171,6 +206,14 @@ Conversion.withTypes = function(t1, t2) {
   */
 };
 
-// Conversion.Identity = new Conversion(function(d) { return d; }, {
-//   'id': 'identity',
-// }, [Type], [Type]);
+
+Conversion.Identity = function identityConversion(tFrom, tTo) {
+  return new Conversion(tFrom, tTo, function(d) { return d; });
+};
+
+Conversion.path = function conversionPath(types) {
+  var pairs = _.zip(types.slice(0, types.length - 1), types.slice(1));
+  return _.map(pairs, function(pair) {
+    return Conversion.withTypes(pair[0], pair[1]);
+  });
+}

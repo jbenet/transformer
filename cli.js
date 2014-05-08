@@ -30,7 +30,7 @@ function convert(ids) {
   ids.push('string');
 
   // transformer chain
-  var in2out = transformer.compose(ids);
+  var in2out = transformer.async.compose(ids);
 
   // for now use rw module with Sync. TODO: streams.
   var input = rw.readSync('/dev/stdin', 'utf8').trim(); // could cause bugs...

@@ -21,11 +21,20 @@ function Value(type, value) {
   this.value = value;
 };
 
-Value.wrap = function valueWrap(from, func) {
+Value.wrapSync = function valueWrapSync(from, func) {
+  return function(input) {
+    input = new Value(from, input);
+    var output = func(input);
+    return output.value;
+  };
+};
+
+Value.wrapAsync = function valueWrapAsync(from, func) {
   return function(input, callback) {
     input = new Value(from, input);
-    func(input, function(output) {
-      callback(output.value);
+    func(input, function(err, output) {
+      if (err) callback(err);
+      else callback(null, output.value);
     });
   };
 };
