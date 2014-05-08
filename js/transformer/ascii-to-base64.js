@@ -5,7 +5,7 @@ var Ascii = Loader('ascii');
 
 module.exports = new Conversion(Ascii, Base64, convert);
 
-function convert(ascii, callback) {
+function convert(ascii) {
   var buf = new Buffer(ascii, 'ascii');
-  callback(buf.toString('base64'));
+  return buf.toString('base64');
 }

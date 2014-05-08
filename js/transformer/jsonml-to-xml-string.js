@@ -6,6 +6,6 @@ var XML = Loader('xml-string');
 
 module.exports = new Conversion(JSONML, XML, convert);
 
-function convert(jsonml, callback) {
-  callback(jsxml.toXml(jsonml).toString());
+function convert(jsonml) {
+  return jsxml.toXml(jsonml).toString();
 }

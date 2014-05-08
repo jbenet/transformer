@@ -5,6 +5,6 @@ var Integer = Loader('integer');
 
 module.exports = new Conversion(tNumber, Integer, convert);
 
-function convert(num, callback) {
-  callback(Math.round(num));
+function convert(num) {
+  return Math.round(num);
 };

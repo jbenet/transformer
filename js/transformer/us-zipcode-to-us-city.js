@@ -6,7 +6,7 @@ var zipdb = require('zippity-do-dah');
 
 module.exports = new Conversion(Zipcode, City, convert);
 
-function convert(zipcode, callback) {
+function convert(zipcode) {
   var r = zipdb.zipcode(zipcode);
-  callback(r.city +', '+ r.state);
+  return r.city +', '+ r.state;
 }

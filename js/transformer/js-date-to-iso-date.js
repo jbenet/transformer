@@ -5,8 +5,8 @@ var JsDate = Loader('js-date');
 
 module.exports = new Conversion(JsDate, IsoDate, convert);
 
-function convert(jsDate, callback) {
-  callback(jsDate.toISOString());
+function convert(jsDate) {
+  return jsDate.toISOString();
 }
 
 // polyfill the toISOString function

@@ -5,6 +5,6 @@ var Ascii = Loader('ascii');
 
 module.exports = new Conversion(tBuffer, Ascii, convert);
 
-function convert(buffer, callback) {
-  callback(buffer.toString('ascii'));
+function convert(buffer) {
+  return buffer.toString('ascii');
 }

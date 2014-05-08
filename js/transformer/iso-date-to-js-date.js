@@ -5,6 +5,6 @@ var JsDate = Loader('js-date');
 
 module.exports = new Conversion(IsoDate, JsDate, convert);
 
-function convert(isoDate, callback) {
-  callback(new Date(isoDate));
+function convert(isoDate) {
+  return new Date(isoDate);
 }

@@ -5,6 +5,6 @@ var tJSON = Loader('json');
 
 module.exports = new Conversion(tString, tJSON, convert);
 
-function convert(str, callback) {
-  callback(JSON.parse(str));
+function convert(str) {
+  return JSON.parse(str);
 }

@@ -6,10 +6,10 @@ var zipdb = require('zippity-do-dah');
 
 module.exports = new Conversion(Zipcode, City, convert);
 
-function convert(city, callback) {
+function convert(city) {
   var parts = city.split(',');
   if (!parts.length == 2)
     throw new Error('City with invalid format.')
   var r = zipdb.citystate(parts[0].trim(), parts[1].trim());
-  callback(r.zipcode);
+  return r.zipcode;
 }

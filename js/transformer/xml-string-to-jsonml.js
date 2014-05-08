@@ -6,7 +6,7 @@ var XML = Loader('xml-string');
 
 module.exports = new Conversion(XML, JSONML, convert);
 
-function convert(xml, callback) {
-  callback(jsxml.fromXml(xml)[0]);
+function convert(xml) {
+  return jsxml.fromXml(xml)[0];
   // https://github.com/rasmuserik/jsxml/issues/1
 }

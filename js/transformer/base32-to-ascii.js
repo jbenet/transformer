@@ -4,8 +4,8 @@ var Loader = require('../loader');
 var Base32 = Loader('base32');
 var Ascii = Loader('ascii');
 
-module.exports = new Conversion(Base32, Ascii, convert);
+module.exports = Conversion(Base32, Ascii, convert);
 
-function convert(base32str, callback) {
-  callback(base32.decode(base32str));
+function convert(base32str) {
+  return base32.decode(base32str);
 }

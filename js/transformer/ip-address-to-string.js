@@ -6,7 +6,7 @@ var IPAddress = Loader('ip-address');
 
 module.exports = new Conversion(IPAddress, tString, convert);
 
-function convert(ipAddr, callback) {
+function convert(ipAddr) {
   ipAddr = ip.toString(ip.toBuffer(ipAddr)); //TODO: validate better.
-  callback(ipAddr); // already a string
+  return ipAddr; // already a string
 }

@@ -5,6 +5,6 @@ var JsDate = Loader('js-date');
 
 module.exports = new Conversion(JsDate, UnixTime, convert);
 
-function convert(jsDate, callback) {
-  callback(jsDate.getTime() / 1000.0); // Date uses ms, not s.
+function convert(jsDate) {
+  return jsDate.getTime() / 1000.0; // Date uses ms, not s.
 }

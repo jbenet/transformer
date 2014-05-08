@@ -5,6 +5,6 @@ var Hex = Loader('hex');
 
 module.exports = new Conversion(Hex, Buffer, convert);
 
-function convert(hex, callback) {
-  callback(new Buffer.Buffer(hex, 'hex'));
+function convert(hex) {
+  return new Buffer.Buffer(hex, 'hex');
 }

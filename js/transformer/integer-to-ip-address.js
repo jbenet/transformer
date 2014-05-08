@@ -6,6 +6,6 @@ var IPAddress = Loader('ip-address');
 
 module.exports = new Conversion(Integer, IPAddress, convert);
 
-function convert(int, callback) {
-  callback(ip.fromLong(int));
+function convert(int) {
+  return ip.fromLong(int);
 };

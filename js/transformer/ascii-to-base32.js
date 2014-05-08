@@ -6,6 +6,6 @@ var Ascii = Loader('ascii');
 
 module.exports = new Conversion(Ascii, Base32, convert);
 
-function convert(ascii, callback) {
-  callback(base32.encode(ascii));
+function convert(ascii) {
+  return base32.encode(ascii);
 };

@@ -5,6 +5,6 @@ var tString = Loader('string');
 
 module.exports = new Conversion(tNumber, tString, convert);
 
-function convert(num, callback) {
-  callback(num.toString());
+function convert(num) {
+  return num.toString();
 };
