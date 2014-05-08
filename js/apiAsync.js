@@ -19,21 +19,9 @@ function transformerAsync() {
     throw new Error('transformer error: no arguments.')
   case 1: // loading
     return Loader(from);
-  case 2: // find conversion
-    return transformerAsync.transformer(from, to);
-  default:
+  default: // find conversions
     return transformerAsync.compose(_.toArray(arguments))
   }
-}
-
-// transformer is one of the main API methods. it returns a function that
-// can be directly applied to data. (wraps raw data with a Value).
-transformerAsync.transformer = function(from, to) {
-  from = coerce(from);
-  to = coerce(to);
-
-  var convert = Conversion.withTypes(from, to);
-  return Value.wrapAsync(from, convert);
 }
 
 // composition of sync functions.
