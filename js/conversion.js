@@ -191,7 +191,7 @@ Conversion.path = function conversionPath(types) {
 
 function convertSyncWrap(func, outType) {
   if (func.length != 1) {
-    throw new Error('sync conversion '+ src.id
+    throw new Error('sync conversion '+ func.id
       + ' should take 1 arg (input):\n' + func);
   }
 
