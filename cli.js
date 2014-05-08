@@ -29,15 +29,29 @@ function convert(ids) {
   ids.unshift('string');
   ids.push('string');
 
-  // transformer chain
-  var in2out = transformer.async.compose(ids);
-
   // for now use rw module with Sync. TODO: streams.
-  var input = rw.readSync('/dev/stdin', 'utf8').trim(); // could cause bugs...
-  in2out(input, function(err, output) {
-    if (err) throw err;
+  var read = function() {
+    return rw.readSync('/dev/stdin', 'utf8').trim();
+  }
+
+  var write = function(output) {
     rw.writeSync('/dev/stdout', '' + output + '\n', 'utf8');
-  });
+  }
+
+  // transformer chain
+  if (argv["sync"]) {
+    console.log("using sync");
+    var in2out = transformer.sync.compose(ids);
+    write(in2out(read()));
+
+  } else {
+    var in2out = transformer.async.compose(ids);
+    in2out(read(), function(err, output) {
+      if (err) throw err;
+      write(output);
+    });
+  }
+
 }
 
 function handle_requires_modules_error(modules) {
