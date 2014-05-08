@@ -140,8 +140,8 @@ Conversion.withTypes = function(t1, t2) {
   }
 
   function errIsModuleNotFound(err) {
-    return e1.code == 'MODULE_NOT_FOUND' // node
-      || e1.toString().match(/Cannot find module/); //browserify
+    return err.code == 'MODULE_NOT_FOUND' // node
+      || err.toString().match(/Cannot find module/); //browserify
   }
 
   try {
