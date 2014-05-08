@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var Object = require('./object');
+var Loader = require('./loader');
 
 module.exports = Type
 
@@ -28,12 +29,23 @@ function Type(src) {
   if (!(this instanceof Type))
     return new Type(src);
 
+  // if it has been seen before, return that.
+  if (src && Type.all[src])
+    return Type.all[src];
+
+  if (src && src.id && Type.all[src.id])
+    return Type.all[src.id];
+
   // if not a full type, just schema, wrap it.
   if (_.isObject(src) && !src['schema'])
     src = {'schema': src};
 
   this.src = Object(src, type_defaults);
+  Type.all[this.src.id] = this;
+  Loader.cache[this.src.id] = this;
 }
+
+Type.all = {};
 
 Type.check = function typeCheck(typeA, typeB) {
   if (!typeB) // ensuring typeA is a Type.

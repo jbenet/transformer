@@ -1,6 +1,7 @@
 var S = require('string');
 var _ = require('underscore');
 var Object = require('./object');
+var Loader = require('./loader');
 var Type = require('./type');
 var Value = require('./value');
 var coerce = require('./coerce');
@@ -52,6 +53,13 @@ function Conversion(inType, outType, func, src) {
   src = _.extend({}, src); // copy + default.
   src.id = Conversion.idWithTypes(inType, outType);
 
+  // if it has been seen before, return that.
+  if (src && Conversion.all[src])
+    return Conversion.all[src];
+
+  if (src && src.id && Conversion.all[src.id])
+    return Conversion.all[src.id];
+
   // setup object src with defaults
   src = Object(src, conversion_defaults);
 
@@ -85,8 +93,12 @@ function Conversion(inType, outType, func, src) {
   conv.outType = outType;
   conv.async = src.async;
   func.async = src.async;
+  Conversion.all[conv.src.id] = conv;
+  Loader.cache[conv.src.id] = conv;
   return conv;
 }
+
+Conversion.all = {};
 
 function notImplemented() {
   throw new Error('Conversion not implemented.');
@@ -127,12 +139,17 @@ Conversion.withTypes = function(t1, t2) {
     return coerce(t1.src.id + '-to-'+ t2.src.id);
   }
 
+  function errIsModuleNotFound(err) {
+    return e1.code == 'MODULE_NOT_FOUND' // node
+      || e1.toString().match(/Cannot find module/); //browserify
+  }
+
   try {
     return loadConversion(t1, t2);
   } catch (e1) {
 
     // if no conversion exists, try to figure it out.
-    if (e1.code == 'MODULE_NOT_FOUND') {
+    if (errIsModuleNotFound(e1)) {
       if (t1.src.schema == t2.src.id ||
           t2.src.schema == t1.src.id ||
           t1.src.schema == t2.src.schema ||
