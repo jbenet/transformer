@@ -17,7 +17,7 @@ function transformerSync() {
   case 0:
     throw new Error('transformer error: no arguments.')
   case 1: // loading
-    return Loader(from);
+    return Loader(arguments[0]);
   default:
     return transformerSync.compose(_.toArray(arguments))
   }

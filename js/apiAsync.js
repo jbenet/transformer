@@ -18,7 +18,7 @@ function transformerAsync() {
   case 0:
     throw new Error('transformer error: no arguments.')
   case 1: // loading
-    return Loader(from);
+    return Loader(arguments[0]);
   default: // find conversions
     return transformerAsync.compose(_.toArray(arguments))
   }
