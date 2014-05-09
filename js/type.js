@@ -5,7 +5,7 @@ var Loader = require('./loader');
 module.exports = Type
 
 var type_defaults = {
-  'type': 'Type',
+  'type': 'type',
 }
 
 // A Type is one of the two Transformer objects.
