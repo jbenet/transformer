@@ -1,7 +1,13 @@
 # transformer - universal data conversion
 
-`transformer` converts all the things!
+`transformer` converts all the things! 
 
+- See [transform.datadex.io](http://transform.datadex.io)
+- Try it out: [transformer in the browser!](http://transform.datadex.io/browser)
+
+[![dat](http://img.shields.io/badge/Development%20sponsored%20by-dat-green.svg?style=flat)](http://dat-data.com)
+
+[![NPM](https://nodei.co/npm/dat-transformer.png?downloads=true&stars=true)](https://nodei.co/npm/dat-transformer/)
 
 # ALPHA WARNING
 
