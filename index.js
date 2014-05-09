@@ -1,5 +1,6 @@
 var Type = require('./js/type');
 var Value = require('./js/value');
+var Object = require('./js/object');
 var Conversion = require('./js/conversion');
 var Loader = require('./js/loader');
 var coerce = require('./js/coerce');
@@ -16,3 +17,4 @@ transformer.load = Loader;
 transformer.Type = Type;
 transformer.Conversion = Conversion;
 transformer.Loader = Loader;
+transformer.contextUrl = Object.contextUrl;

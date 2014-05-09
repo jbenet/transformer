@@ -2,10 +2,6 @@ var _ = require('underscore');
 
 module.exports = Object
 
-var obj_defaults = {
-  '@context': 'http://transformer.io/context/transformer.jsonld'
-}
-
 function Object(src, defaults) {
   if (!_.isObject(src))
     throw new Error('TypeError: expected object definition. ' + src)
@@ -14,7 +10,13 @@ function Object(src, defaults) {
     throw new Error('id must be a nonempty string. Got '+ src.id);
 
   // copy for modification
-  src = _.extend({}, obj_defaults, defaults, src)
+  src = _.extend({}, Object.defaults, defaults, src)
 
   return src
+}
+
+Object.contextUrl = 'http://transformer.io/context/transformer.jsonld'
+
+Object.defaults = {
+  '@context': Object.contextUrl,
 }
