@@ -62,9 +62,9 @@ Loader.NpmName = function(id) {
 Loader.NpmName = function(id, type) {
   name = id.split('/')[1]
   switch (type) {
-  case 'Type':
+  case 'type':
     return 'transformer-type-' + name
-  case 'Conversion':
+  case 'conversion':
     return 'transformer-' + name
   }
   throw new Error('Transformer npm name: unknown type.')

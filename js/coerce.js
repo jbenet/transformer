@@ -24,8 +24,8 @@ module.exports = function coerce(obj) {
   // raw object with type? construct.
   if (_.isObject(obj) && obj['type']) {
     switch (obj['type']) {
-    case 'Type': return Type(obj);
-    case 'Conversion': return Conversion(obj);
+    case 'type': return Type(obj);
+    case 'conversion': return Conversion(obj);
     }
   }
 

@@ -10,7 +10,7 @@ var defer = require('./defer');
 module.exports = Conversion
 
 var conversion_defaults = {
-  'type': 'Conversion',
+  'type': 'conversion',
   // 'invertible': true,
   'input': [],
   'output': []
