@@ -241,5 +241,7 @@ function convertAsyncWrap(func, outType) {
         defer(callback, null, new Value(outType, output));
       }
     });
+
+    return new Error("This is an async conversion. Use callbacks.");
   };
 }
