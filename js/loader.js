@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var install = require('npm-installer');
+// var install = require('npm-installer');
 module.exports = Loader;
 
 // id format: <namespace>/<name>
@@ -39,15 +39,15 @@ Loader.LoadFromNpm = function (id) {
   return require(name);
 }
 
-Loader.InstallFromNpm = function(npmName) {
-  if (!npmName)
-    throw new Error('install requires valid npmName');
+// Loader.InstallFromNpm = function(npmName) {
+//   if (!npmName)
+//     throw new Error('install requires valid npmName');
 
-  install(npmName, function(err, data) {
-    if (err) throw err;
-    callback(data);
-  });
-}
+//   install(npmName, function(err, data) {
+//     if (err) throw err;
+//     callback(data);
+//   });
+// }
 
 Loader.NpmName = function(id) {
   return 'transformer.' + id;
