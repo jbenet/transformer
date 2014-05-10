@@ -37,7 +37,7 @@ T.object = function(mod) {
     var pkg = readSyncJson('./package.json');
     t.is(pkg.name, 'transformer.' + mod.src.id, 'pkg.name');
     t.is(pkg.transformer, 'transformer.jsonld', 'pkg.transformer');
-    t.is(pkg.scripts.test, 'test.js', 'pkg.test');
+    t.is(pkg.scripts.test, 'node test.js', 'pkg.test');
     t.ok(_.contains(pkg.keywords, 'transformer'), 'pkg.keywords 1');
     t.ok(_.contains(pkg.keywords, 'transformer-' + mod.src.type), 'pkg.keywords 2');
     t.end();
