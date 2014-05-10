@@ -21,7 +21,8 @@ Loader.cache = {}
 Loader.autoInstall = false;
 
 Loader.LoadId = function(id) {
-  return require('./transformer/'+id);
+  var name = Loader.NpmName(id)
+  return require('transformer.'+id);
 
   // try npm -- worry about this later.
   // return Loader.LoadFromNpm(id);
@@ -48,12 +49,8 @@ Loader.InstallFromNpm = function(npmName) {
   });
 }
 
-Loader.Npmize = function(id) {
-  return id.toLowerCase().replace('/', '-');
-}
-
 Loader.NpmName = function(id) {
-  return 'transformer.' + Loader.Npmize(id);
+  return 'transformer.' + id;
 }
 
 /*
