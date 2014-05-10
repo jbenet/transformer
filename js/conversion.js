@@ -139,17 +139,12 @@ Conversion.withTypes = function(t1, t2) {
     return coerce(t1.src.id + '-to-'+ t2.src.id);
   }
 
-  function errIsModuleNotFound(err) {
-    return err.code == 'MODULE_NOT_FOUND' // node
-      || err.toString().match(/Cannot find module/); //browserify
-  }
-
   try {
     return loadConversion(t1, t2);
   } catch (e1) {
 
     // if no conversion exists, try to figure it out.
-    if (errIsModuleNotFound(e1)) {
+    if (Loader.errIsModuleNotFound(e1)) {
       if (t1.src.schema == t2.src.id ||
           t2.src.schema == t1.src.id ||
           t1.src.schema == t2.src.schema ||

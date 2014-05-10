@@ -70,3 +70,8 @@ Loader.NpmName = function(id, type) {
   throw new Error('Transformer npm name: unknown type.')
 }
 */
+
+Loader.errIsModuleNotFound = function(err) {
+  return err.code == 'MODULE_NOT_FOUND' // node
+    || err.toString().match(/Cannot find module/); //browserify
+}
