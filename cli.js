@@ -53,7 +53,7 @@ function convert(ids) {
 
 }
 
-function handle_requires_modules_error(modules) {
+function handleRequiresModulesError(modules) {
   tmpl = _.template("Error: transformer needs the following npm modules to perform this conversion:\n\
 <% _.each(modules, function(m) { %>\n\
   - <%= m %>\n\
@@ -90,10 +90,10 @@ function main() {
 try {
   main();
 } catch (e) {
-  if (e.code == 'MODULE_NOT_FOUND') {
+  if (transformer.load.errIsModuleNotFound(e)) {
     var s = e.toString();
     var s = s.substr(s.search("'")).replace(/'/g, '');
-    handle_requires_modules_error([s]);
+    handleRequiresModulesError([s]);
   } else {
     throw e;
   }
