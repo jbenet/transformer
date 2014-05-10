@@ -1,12 +1,15 @@
 var _ = require('underscore');
 var Loader = require('./loader');
 var Object = require('./object');
-var Type = require('./type');
-var Value = require('./value');
-var Conversion = require('./conversion');
+var Type; // dep cycle
+var Value; // dep cycle
+var Conversion; // dep cycle
 
 
 module.exports = function coerce(obj) {
+
+  if (!Conversion || !Type || !Value)
+    resolveDeps();
 
   // string? load module.
   if (_.isString(obj))
@@ -33,3 +36,9 @@ module.exports = function coerce(obj) {
   console.log(obj);
   throw new Error('transformer: unknown input object: ' + obj);
 };
+
+function resolveDeps() {
+  Type = require('./type');
+  Value = require('./value');
+  Conversion = require('./conversion');
+}
