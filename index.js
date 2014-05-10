@@ -6,6 +6,7 @@ var Loader = require('./js/loader');
 var coerce = require('./js/coerce');
 var apiSync = require('./js/apiSync');
 var apiAsync = require('./js/apiAsync');
+var test = require('./js/test');
 
 var transformer = module.exports = apiSync;
 
@@ -18,3 +19,4 @@ transformer.Type = Type;
 transformer.Conversion = Conversion;
 transformer.Loader = Loader;
 transformer.contextUrl = Object.contextUrl;
+transformer.test = test;

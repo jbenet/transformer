@@ -206,6 +206,13 @@ Conversion.path = function conversionPath(types) {
   });
 }
 
+Conversion.valueWrap = function(conversion) {
+  if (conversion.async)
+    return Value.wrapAsync(conversion.inType, conversion);
+  else
+    return Value.wrapSync(conversion.inType, conversion);
+}
+
 function convertSyncWrap(func, outType) {
   if (func.length != 1) {
     throw new Error('sync conversion '+ func.id
