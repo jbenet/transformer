@@ -1,6 +1,6 @@
 {
   "name": "dat-transformer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "multiformat conversion",
   "main": "index.js",
   "bin": {
