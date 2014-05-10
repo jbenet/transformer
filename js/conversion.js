@@ -194,6 +194,13 @@ Conversion.Identity = function identityConversion(tFrom, tTo) {
   return new Conversion(tFrom, tTo, function(d) { return d; });
 };
 
+Conversion.pathIds = function conversionPathIds(types) {
+  var pairs = _.zip(types.slice(0, types.length - 1), types.slice(1));
+  return _.map(pairs, function(pair) {
+    return pair[0] +'-to-'+ pair[1];
+  });
+}
+
 Conversion.path = function conversionPath(types) {
   var pairs = _.zip(types.slice(0, types.length - 1), types.slice(1));
   return _.map(pairs, function(pair) {

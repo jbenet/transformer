@@ -28,6 +28,9 @@ function convert(ids) {
   ids.unshift('string');
   ids.push('string');
 
+  var convs = transformer.Conversion.pathIds(ids);
+  ensureModulesAreInstalled(ids.concat(convs));
+
   // for now use rw module with Sync. TODO: streams.
   var read = function() {
     return rw.readSync('/dev/stdin', 'utf8').trim();
@@ -56,8 +59,9 @@ function convert(ids) {
 function handleRequiresModulesError(modules) {
   tmpl = _.template("Error: transformer needs the following npm modules to perform this conversion:\n\
 <% _.each(modules, function(m) { %>\n\
-  - <%= m %>\n\
+  - <%= m %>\
 <% }); %>\n\
+\n\
 To install them, run:\n\
 \n\
   # in this directory\n\
@@ -70,6 +74,23 @@ To install them, run:\n\
 
   log(tmpl({ modules: modules }));
   process.exit(-1);
+}
+
+function ensureModulesAreInstalled(ids) {
+  missing = _.filter(ids, function(id) {
+    try {
+      // load. if no exception, it succeeded.
+      transformer(id);
+      return false;
+    } catch (e) {
+      if (transformer.load.errIsModuleNotFound(e))
+        return true;
+      throw e;
+    }
+  });
+
+  if (missing)
+    handleRequiresModulesError(missing);
 }
 
 function main() {
