@@ -86,7 +86,7 @@ function Conversion(inType, outType, func, src) {
   var wrap = (src.async ? convertAsyncWrap : convertSyncWrap);
   var conv = wrap(func, outType);
   conv.name = src.id + '.wrapper';
-  // conv.constructor = Conversion; // todo fix this
+  conv.type = Conversion;
   conv.convert = func;
   conv.src = src;
   conv.inType = inType;

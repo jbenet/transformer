@@ -40,7 +40,11 @@ function Type(src) {
   if (_.isObject(src) && !src['schema'])
     src = {'schema': src};
 
+  // if without a description, use id
+  src.description = src.description || src.id;
+
   this.src = Object(src, type_defaults);
+  this.type = Type;
   Type.all[this.src.id] = this;
   Loader.cache[this.src.id] = this;
 }
