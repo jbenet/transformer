@@ -3,7 +3,6 @@
 var rw = require('rw');
 var S = require('string');
 var _ = require('underscore');
-var Loader = require('./js/loader');
 var transformer = require('./');
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -76,7 +75,7 @@ To install them, run:\n\
 function main() {
 
   // set options.
-  Loader.autoInstall = argv.install;
+  transformer.load.autoInstall = argv.install;
 
   if (argv.src) { // is it print src?
     print_src(argv.src);
