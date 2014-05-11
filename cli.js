@@ -28,7 +28,7 @@ function convert(ids) {
   ids.unshift('string');
   ids.push('string');
 
-  var convs = transformer.Conversion.pathIds(ids);
+  var convs = []; // transformer.Conversion.pathIds(ids);
   ensureModulesAreInstalled(ids.concat(convs));
 
   // for now use rw module with Sync. TODO: streams.
