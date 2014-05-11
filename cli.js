@@ -56,9 +56,9 @@ function convert(ids) {
 
 }
 
-function handleRequiresModulesError(modules) {
-  tmpl = _.template("Error: transformer needs the following npm modules to perform this conversion:\n\
-<% _.each(modules, function(m) { %>\n\
+function handleRequiresModulesError(ids) {
+  var tmpl = _.template("Error: transformer needs the following npm modules to perform this conversion:\n\
+<% _.each(ids, function(m) { %>\n\
   - <%= m %>\
 <% }); %>\n\
 \n\
@@ -72,12 +72,13 @@ To install them, run:\n\
 \n\
 ");
 
-  log(tmpl({ modules: modules }));
+  var modules = _.map(ids, transformer.load.NpmName);
+  log(tmpl({ ids: ids, modules: modules }));
   process.exit(-1);
 }
 
 function ensureModulesAreInstalled(ids) {
-  missing = _.filter(ids, function(id) {
+  missing = _.unique(_.filter(ids, function(id) {
     try {
       // load. if no exception, it succeeded.
       transformer(id);
@@ -87,9 +88,9 @@ function ensureModulesAreInstalled(ids) {
         return true;
       throw e;
     }
-  });
+  }));
 
-  if (missing)
+  if (missing.length > 0)
     handleRequiresModulesError(missing);
 }
 
@@ -112,10 +113,19 @@ try {
   main();
 } catch (e) {
   if (transformer.load.errIsModuleNotFound(e)) {
-    var s = e.toString();
-    var s = s.substr(s.search("'")).replace(/'/g, '');
-    handleRequiresModulesError([s]);
+    var m = stringModuleIds(e.toString());
+    handleRequiresModulesError(m);
   } else {
     throw e;
   }
+}
+
+function stringModuleIds(str) {
+  var re = /transformer\.([a-z0-9-.]+)/ig;
+  var matches = [];
+  var match;
+  while (match = re.exec(str)) {
+    matches.push(match[1]);
+  }
+  return matches;
 }
