@@ -145,6 +145,7 @@ Conversion.withTypes = function(t1, t2) {
 
     // if no conversion exists, try to figure it out.
     if (Loader.errIsModuleNotFound(e1)) {
+      // console.log('using identity for ' + t1.src.id + ' and ' +t2.src.id);
       if (t1.src.schema == t2.src.id ||
           t2.src.schema == t1.src.id ||
           t1.src.schema == t2.src.schema ||
