@@ -22,7 +22,7 @@ Loader.autoInstall = false;
 
 Loader.LoadId = function(id) {
   var name = Loader.NpmName(id)
-  return require('transformer.'+id);
+  return require(name);
 
   // try npm -- worry about this later.
   // return Loader.LoadFromNpm(id);
