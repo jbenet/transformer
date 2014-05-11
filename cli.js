@@ -68,11 +68,11 @@ function handleRequiresModulesError(ids) {
 \n\
 To install them, run:\n\
 \n\
-  # in this directory\n\
-  npm install <%= modules.join(' ') %>\n\
+  # locally, to be used within this directory\n\
+  transformer --install <%= ids.join(' ') %>\n\
 \n\
-  # globally (you may need to sudo)\n\
-  npm install -g <%= modules.join(' ') %>\n\
+  # globally, to be used everywhere in your system (you may need to sudo)\n\
+  transformer --install -g <%= ids.join(' ') %>\n\
 \n\
 ");
 
