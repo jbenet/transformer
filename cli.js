@@ -6,6 +6,8 @@ var _ = require('underscore');
 var resolve = require('resolve');
 var npmDir = require('npm-dir');
 var transformer = require('./');
+var search = require('./js/search');
+var exec = require('child_process').exec;
 var argv = require('minimist')(process.argv.slice(2));
 
 var log = console.log;
@@ -119,6 +121,58 @@ transformer.load.LoadId = function(id) {
   }
 }
 
+function npmModulesToInstall(ids) {
+  var install = []
+  _.each(ids, function(m) {
+    // if last is not conversion, add conversion in between
+    var last = _.last(install);
+    if (last && !last.match(/-to-/)) {
+      install.push(transformer.Conversion.idWithTypes(last, m));
+    }
+
+    install.push(m);
+  });
+
+  // make npm names
+  install = _.map(install, transformer.load.NpmName);
+
+  install = _.uniq(install);
+  return install;
+}
+
+function installModules(modules) {
+  // install them.
+  var g = (argv.global || argv.g) ? '-g ' : ''
+  var cmd = 'npm install ' + g + modules.join(' ');
+  log(cmd);
+  exec(cmd, function(err, stdout, stderr) {
+    if (err) log('install error: ' + err);
+
+    log('');
+    log('Installed:');
+    _.each(modules, function(m) {
+      log('- ' + m);
+    })
+  });
+}
+
+function install(ids) {
+  var install = [];
+  var modules = npmModulesToInstall(ids);
+
+  search(null, function(err, allModules) {
+    if (err) throw err;
+
+    _.map(modules, function(m) {
+      if (_.contains(allModules, m))
+        install.push(m);
+      else
+        log('No npm package for: '+m);
+    });
+
+    installModules(install);
+  });
+}
 
 function main() {
 
@@ -127,6 +181,9 @@ function main() {
 
   if (argv.src) { // is it print src?
     print_src(argv.src);
+  }
+  else if (argv.install) {
+    install(argv._);
   }
   else { // seems to be a conversion
     convert(argv._);
