@@ -20,7 +20,8 @@ module.exports = function coerce(obj) {
       obj instanceof Type ||
       obj instanceof Conversion ||
       obj === Type ||
-      obj === Conversion) {
+      obj === Conversion ||
+      (obj.src && obj.src["@context"] == Object.contextUrl)) {
     return obj;
   }
 
