@@ -30,7 +30,9 @@
     "underscore": "~1.6.0",
     "minimist": "0.0.8",
     "string": "~1.8.1",
-    "tape": "~2.12.3"
+    "tape": "~2.12.3",
+    "resolve": "~0.6.3",
+    "npm-dir": "~0.1.0"
   },
   "devDependencies": {}
 }

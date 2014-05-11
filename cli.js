@@ -3,6 +3,8 @@
 var rw = require('rw');
 var S = require('string');
 var _ = require('underscore');
+var resolve = require('resolve');
+var npmDir = require('npm-dir');
 var transformer = require('./');
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -93,6 +95,30 @@ function ensureModulesAreInstalled(ids) {
   if (missing.length > 0)
     handleRequiresModulesError(missing);
 }
+
+
+// patch transformer.load to use special loading.
+// cli needs to handle special cases.
+// See https://github.com/jbenet/transformer/issues/15
+transformer.load.LoadId = function(id) {
+  var name = transformer.load.NpmName(id)
+  try {
+    return require(name);
+  } catch (e) {
+
+    // try global installation
+    if (transformer.load.errIsModuleNotFound(e)) {
+      var res = resolve.sync(name, { basedir: npmDir.dir });
+      if (res) {
+        return require(res);
+      }
+    }
+
+    // otherwise error out
+    throw e;
+  }
+}
+
 
 function main() {
 
