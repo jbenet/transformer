@@ -3,12 +3,12 @@
 var rw = require('rw');
 var S = require('string');
 var _ = require('underscore');
-var resolve = require('resolve');
+var npmResolve = require('resolve');
 var npmDir = require('npm-dir');
-var transformer = require('./');
-var search = require('./js/search');
-var exec = require('child_process').exec;
 var argv = require('minimist')(process.argv.slice(2));
+
+var install = require('transformer-installer')
+var transformer = require('./');
 
 var log = console.log;
 
@@ -44,14 +44,17 @@ function convert(ids) {
     rw.writeSync('/dev/stdout', '' + output + '\n', 'utf8');
   }
 
+  // resolve ids -> conversion
+  var conversions = transformer.resolve(ids)
+
   // transformer chain
   if (argv["sync"]) {
     console.log("using sync");
-    var in2out = transformer.sync.compose(ids);
+    var in2out = transformer.compose.sync(conversions);
     write(in2out(read()));
 
   } else {
-    var in2out = transformer.async.compose(ids);
+    var in2out = transformer.compose.async(conversions);
     in2out(read(), function(err, output) {
       if (err) throw err;
       write(output);
@@ -61,41 +64,14 @@ function convert(ids) {
 }
 
 function handleRequiresModulesError(ids) {
-  var tmpl = _.template("Error: transformer needs the following npm modules to perform this conversion:\n\
-<% _.each(ids, function(m) { %>\n\
-  - <%= m %>\
-<% }); %>\n\
-\n\
-To install them, run:\n\
-\n\
-  # locally, to be used within this directory\n\
-  transformer --install <%= ids.join(' ') %>\n\
-\n\
-  # globally, to be used everywhere in your system (you may need to sudo)\n\
-  transformer --install -g <%= ids.join(' ') %>\n\
-\n\
-");
-
-  var modules = _.map(ids, transformer.load.NpmName);
-  log(tmpl({ ids: ids, modules: modules }));
-  process.exit(-1);
+  log(install.explanation(ids))
+  process.exit(-1)
 }
 
 function ensureModulesAreInstalled(ids) {
-  missing = _.unique(_.filter(ids, function(id) {
-    try {
-      // load. if no exception, it succeeded.
-      transformer(id);
-      return false;
-    } catch (e) {
-      if (transformer.load.errIsModuleNotFound(e))
-        return true;
-      throw e;
-    }
-  }));
-
+  missing = transformer.load.missingModules(ids)
   if (missing.length > 0)
-    handleRequiresModulesError(missing);
+    handleRequiresModulesError(missing)
 }
 
 
@@ -110,7 +86,7 @@ transformer.load.LoadId = function(id) {
 
     // try global installation
     if (transformer.load.errIsModuleNotFound(e)) {
-      var res = resolve.sync(name, { basedir: npmDir.dir });
+      var res = npmResolve.sync(name, { basedir: npmDir.dir });
       if (res) {
         return require(res);
       }
@@ -119,59 +95,6 @@ transformer.load.LoadId = function(id) {
     // otherwise error out
     throw e;
   }
-}
-
-function npmModulesToInstall(ids) {
-  var install = []
-  _.each(ids, function(m) {
-    // if last is not conversion, add conversion in between
-    var last = _.last(install);
-    if (last && !last.match(/-to-/)) {
-      install.push(transformer.Conversion.idWithTypes(last, m));
-    }
-
-    install.push(m);
-  });
-
-  // make npm names
-  install = _.map(install, transformer.load.NpmName);
-
-  install = _.uniq(install);
-  return install;
-}
-
-function installModules(modules) {
-  // install them.
-  var g = (argv.global || argv.g) ? '-g ' : ''
-  var cmd = 'npm install ' + g + modules.join(' ');
-  log(cmd);
-  exec(cmd, function(err, stdout, stderr) {
-    if (err) log('install error: ' + err);
-
-    log('');
-    log('Installed:');
-    _.each(modules, function(m) {
-      log('- ' + m);
-    })
-  });
-}
-
-function install(ids) {
-  var install = [];
-  var modules = npmModulesToInstall(ids);
-
-  search(null, function(err, allModules) {
-    if (err) throw err;
-
-    _.map(modules, function(m) {
-      if (_.contains(allModules, m))
-        install.push(m);
-      else
-        log('No npm package for: '+m);
-    });
-
-    installModules(install);
-  });
 }
 
 function main() {
@@ -183,7 +106,7 @@ function main() {
     print_src(argv.src);
   }
   else if (argv.install) {
-    install(argv._);
+    install(argv._, (argv.g || argv.global));
   }
   else { // seems to be a conversion
     convert(argv._);
