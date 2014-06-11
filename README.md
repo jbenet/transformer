@@ -1,6 +1,6 @@
 # transformer - universal data conversion
 
-`transformer` converts all the things! 
+`transformer` converts all the things!
 
 - See [transform.datadex.io](http://transform.datadex.io)
 - Try it out: [transformer in the browser!](http://transform.datadex.io/browser)
@@ -148,6 +148,23 @@ fwAAAQ==
 > echo "<foo>bar</foo>" | transform xml-string json
 ["foo","bar"]
 ```
+
+## Development
+
+Transformer is part of [Dat Project](http://dat-data.com). It is designed to be modular. All types and conversions are npm modules.
+
+Transformer's core is, itself, modular. See:
+
+- [transformer-type](https://github.com/jbenet/transformer-type) - use it to make a transformer type
+- [transformer-conversion](https://github.com/jbenet/transformer-conversion) - use it to make a transformer conversion
+- [transformer-compose](https://github.com/jbenet/transformer-compose) - composes conversions
+- [transformer-resolve](https://github.com/jbenet/transformer-resolve) - resolves conversions. (dumb atm)
+- [transformer-test](https://github.com/jbenet/transformer-test) - tests your types + conversions
+- [transformer-pkg](https://github.com/jbenet/transformer-pkg) - make, test, publish types + conversions in under one minute (ACT NOW!!!)
+- [transformer-loader](https://github.com/jbenet/transformer-loader) - dynamic loading
+- [transformer-website](https://github.com/jbenet/transformer-website) - the website: http://transform.datadex.io
+- [transformer-cli](https://github.com/jbenet/transformer-cli)
+
 
 ## transformer story
 
