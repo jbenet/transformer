@@ -28,7 +28,7 @@
   "dependencies": {
     "lodash.map": "^2.4.1",
     "minimist": "0.0.8",
-    "resolve": "~0.6.3",
+    "resolve": "^0.6.3",
     "transformer-compose": "^0.1.0",
     "transformer-conversion": "^0.1.2",
     "transformer-installer": "^0.1.0",
