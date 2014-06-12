@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-var argv = require('minimist')(process.argv.slice(2));
 var install = require('transformer-installer')
 var moduleCheck = require('./module-check')
 // var compile = require('transformer-compiler')
 var transformer = require('./');
+var argv = require('minimist')(process.argv.slice(2), {
+  boolean: ['g', 'global'],
+});
 
 var useGlobal = argv.g || argv.global
 var log = console.log;

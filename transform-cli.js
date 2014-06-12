@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 var rw = require('rw');
 var map = require('lodash.map');
-var argv = require('minimist')(process.argv.slice(2));
 var moduleCheck = require('./module-check')
 var transformer = require('./');
+var argv = require('minimist')(process.argv.slice(2), {
+  boolean: ['g', 'global', 'sync', 'async'],
+});
 
 var useGlobal = argv.g || argv.global
 var log = console.log;
