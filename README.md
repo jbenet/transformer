@@ -22,22 +22,48 @@ Install transformer globally:
     npm install -g dat-transformer
 
 
-Convert data between two formats:
+Need to convert from unix-time to iso-date?
 
 ```
-# transform <typeA> <typeB> < <dataA> > <dataB>
-> echo 1398810849 | transform unix-time iso-date
-2014-04-29T22:34:09.000Z
+# install the types + conversions (globally)
+> transformer install -g string number integer unix-time js-date iso-date string
+Installed:
+- transformer.string
+- transformer.string-to-number
+- transformer.number
+- transformer.number-to-integer
+- transformer.integer
+- transformer.unix-time
+- transformer.unix-time-to-js-date
+- transformer.js-date
+- transformer.js-date-to-iso-date
+- transformer.iso-date
 
-> echo 2130706433 | transform ip-address-int ip-address
-127.0.0.1
+> echo 1398810849 | transform -g number integer unix-time js-date iso-date
+2014-04-29T22:34:09.000Z
+```
+
+Or an IP address to its hex value?
+
+```
+> transformer install -g string ip-address buffer hex string
+Installed:
+- transformer.string
+- transformer.hex
+- transformer.hex-to-buffer
+- transformer.buffer
+- transformer.buffer-to-ip-address
+- transformer.ip-address
+
+> echo "127.0.0.1" | transform -g ip-address buffer hex
+7f000001
 ```
 
 Show description for type:
 
 ```
-# transform --src <type>
-> transform --src iso-date
+# transformer src <type>
+> transformer src iso-date
 {
  "@context": "http://transformer.io/context/transformer.jsonld",
  "id": "transformer/iso-date",
