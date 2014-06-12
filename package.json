@@ -1,6 +1,6 @@
 {
   "name": "dat-transformer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "multiformat conversion",
   "main": "index.js",
   "bin": {
@@ -26,16 +26,15 @@
     "url": "https://github.com/jbenet/transformer/issues"
   },
   "dependencies": {
-    "underscore": "~1.6.0",
+    "lodash.map": "^2.4.1",
     "minimist": "0.0.8",
-    "string": "~1.8.1",
     "resolve": "~0.6.3",
-    "npm-dir": "~0.1.0",
-    "transformer-type": "~0.1.0",
-    "transformer-conversion": "~0.1.0",
-    "transformer-resolve": "~0.1.0",
-    "transformer-loader": "~0.1.0",
-    "transformer-installer": "~0.1.0"
+    "transformer-compose": "^0.1.0",
+    "transformer-conversion": "^0.1.2",
+    "transformer-installer": "^0.1.0",
+    "transformer-loader": "^0.1.2",
+    "transformer-resolve": "^0.1.2",
+    "transformer-type": "^0.1.0"
   },
   "devDependencies": {},
   "homepage": "https://github.com/jbenet/transformer"

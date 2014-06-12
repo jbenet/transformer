@@ -1,10 +1,6 @@
 #!/usr/bin/env node
-
 var rw = require('rw');
-var S = require('string');
-var _ = require('underscore');
-var npmResolve = require('resolve');
-var npmDir = require('npm-dir');
+var map = require('lodash.map');
 var argv = require('minimist')(process.argv.slice(2));
 
 var install = require('transformer-installer')
@@ -18,7 +14,7 @@ function usage() {
 };
 
 function print_src(id) {
-  var m = transformer.load(argv.src);
+  var m = transformer.loader(argv.src);
   log(JSON.stringify(m.src, undefined, 1));
 }
 
@@ -48,8 +44,12 @@ function convert(ids) {
   var conversions = transformer.resolve(ids)
 
   // transformer chain
-  if (argv["sync"]) {
-    console.log("using sync");
+  var async = argv["async"]
+  map(conversions, function(c) {
+    async = async || c.async
+  })
+
+  if (!async || argv["sync"]) {
     var in2out = transformer.compose.sync(conversions);
     write(in2out(read()));
 
@@ -69,38 +69,19 @@ function handleRequiresModulesError(ids) {
 }
 
 function ensureModulesAreInstalled(ids) {
-  missing = transformer.load.missingModules(ids)
+  missing = transformer.loader.missingModules(ids)
   if (missing.length > 0)
     handleRequiresModulesError(missing)
 }
 
 
-// patch transformer.load to use special loading.
-// cli needs to handle special cases.
-// See https://github.com/jbenet/transformer/issues/15
-transformer.load.LoadId = function(id) {
-  var name = transformer.load.NpmName(id)
-  try {
-    return require(name);
-  } catch (e) {
-
-    // try global installation
-    if (transformer.load.errIsModuleNotFound(e)) {
-      var res = npmResolve.sync(name, { basedir: npmDir.dir });
-      if (res) {
-        return require(res);
-      }
-    }
-
-    // otherwise error out
-    throw e;
-  }
-}
-
 function main() {
 
+  // set global resolution if wanted.
+  transformer.resolve.useGlobalModules(argv.g || argv.global)
+
   // set options.
-  transformer.load.autoInstall = argv.install;
+  transformer.loader.autoInstall = argv.install;
 
   if (argv.src) { // is it print src?
     print_src(argv.src);
@@ -118,7 +99,7 @@ function main() {
 try {
   main();
 } catch (e) {
-  if (transformer.load.errIsModuleNotFound(e)) {
+  if (transformer.loader.errIsModuleNotFound(e)) {
     var m = stringModuleIds(e.toString());
     handleRequiresModulesError(m);
   } else {
