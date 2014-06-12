@@ -4,7 +4,8 @@
   "description": "multiformat conversion",
   "main": "index.js",
   "bin": {
-    "transform": "cli.js"
+    "transform": "transform-cli.js",
+    "transformer": "transformer-cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -32,7 +33,7 @@
     "transformer-compose": "^0.1.0",
     "transformer-conversion": "^0.1.2",
     "transformer-installer": "^0.1.0",
-    "transformer-loader": "^0.1.2",
+    "transformer-loader": "^0.1.3",
     "transformer-resolve": "^0.1.2",
     "transformer-type": "^0.1.0"
   },

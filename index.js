@@ -4,7 +4,7 @@ var compose = require('transformer-compose')
 var resolve = require('transformer-resolve')
 var loader = require('transformer-loader')
 
-var transformer = module.exports = transformerSync;
+var transformer = module.exports = transformerSync
 
 transformer.sync = transformerSync
 transformer.async = transformerAsync
