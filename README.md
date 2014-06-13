@@ -179,17 +179,28 @@ fwAAAQ==
 
 Transformer is part of [Dat Project](http://dat-data.com). It is designed to be modular. All types and conversions are npm modules.
 
-Transformer's core is, itself, modular. See:
+Transformer's core is modular itself. See:
 
 - [transformer-type](https://github.com/jbenet/transformer-type) - use it to make a transformer type
 - [transformer-conversion](https://github.com/jbenet/transformer-conversion) - use it to make a transformer conversion
 - [transformer-compose](https://github.com/jbenet/transformer-compose) - composes conversions
-- [transformer-resolve](https://github.com/jbenet/transformer-resolve) - resolves conversions. (dumb atm)
-- [transformer-test](https://github.com/jbenet/transformer-test) - tests your types + conversions
-- [transformer-pkg](https://github.com/jbenet/transformer-pkg) - make, test, publish types + conversions in under one minute (ACT NOW!!!)
-- [transformer-loader](https://github.com/jbenet/transformer-loader) - dynamic loading
+- [transformer-resolve](https://github.com/jbenet/transformer-resolve) - resolves types into the conversion pipeline between them. (dumb atm)
+- [transformer-loader](https://github.com/jbenet/transformer-loader) - dynamic loading of transformer modules
+- [transformer-compile](https://github.com/jbenet/transformer-loader) - compiles a conversion pipeline into a single module (uses requires).
+  - Bundle compiled transformers with [browserify](https://github.com/substack/node-browserify)
+- [transformer](https://github.com/jbenet/transformer) (this module) - all core as one library, and two command line tools:
+  - `transformer` - utility to install, resolve, and compile transformer modules
+  - `transform <types> < <infile> > <outfile>` - expose any transformer as a pipe-loving unix utility
+
+For making your own types and conversions:
+
+- [transformer-pkg](https://github.com/jbenet/transformer-pkg) - cli tool to make, test, publish types + conversions in under one minute (ACT NOW!!!)
+- [transformer-test](https://github.com/jbenet/transformer-test) - tests your types + conversions (used by `transformer-pkg`)
+
+Other:
+
 - [transformer-website](https://github.com/jbenet/transformer-website) - the website: http://transform.datadex.io
-- [transformer-cli](https://github.com/jbenet/transformer-cli)
+
 
 
 ## transformer story
