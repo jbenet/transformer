@@ -7,9 +7,10 @@ var moduleCheck = require('./module-check')
 // var compile = require('transformer-compiler')
 var transformer = require('./');
 var argv = require('minimist')(process.argv.slice(2), {
-  boolean: ['g', 'global'],
+  boolean: ['g', 'global', 'async'],
 });
 
+var useAsync = argv.async
 var useGlobal = argv.g || argv.global
 var log = console.log;
 
@@ -27,8 +28,8 @@ function usage() {
 };
 
 function src(id, useGlobal) {
-  var m = transformer.loader(id, useGlobal);
-  log(JSON.stringify(m.src, undefined, 1));
+  var m = transformer.loader(id, useGlobal)
+  return JSON.stringify(m.src, undefined, 1)
 }
 
 function resolveIds(types, useGlobal) {
@@ -47,10 +48,10 @@ function main() {
   var command = argv._[0].toLowerCase()
   var rest = argv._.slice(1)
   switch (command) {
-  case 'install': return install(rest, useGlobal)
-  case 'resolve': return console.log(resolveIds(rest, useGlobal))
-  case 'compile': return console.log(compile(resolve(rest, useGlobal)))
-  case 'src': return src(rest[0], useGlobal)
+  case 'install': return log(install(rest, useGlobal))
+  case 'resolve': return log(resolveIds(rest, useGlobal))
+  case 'compile': return log(compile(resolve(rest, useGlobal), useAsync))
+  case 'src': return log(src(rest[0], useGlobal))
   }
 
   usage()
