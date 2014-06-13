@@ -1,8 +1,8 @@
 var Type = require('transformer-type')
 var Conversion = require('transformer-conversion')
+var loader = require('transformer-loader')
 var compose = require('transformer-compose')
 var resolve = require('transformer-resolve')
-var loader = require('transformer-loader')
 
 var transformer = module.exports = transformerSync
 
@@ -11,8 +11,8 @@ transformer.async = transformerAsync
 
 transformer.Type = Type
 transformer.Conversion = Conversion
-transformer.compose = compose
 transformer.loader = loader
+transformer.compose = compose
 transformer.resolve = resolve
 transformer.contextUrl = Type.Object.contextUrl
 

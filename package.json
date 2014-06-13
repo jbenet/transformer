@@ -1,6 +1,6 @@
 {
   "name": "dat-transformer",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "multiformat conversion",
   "main": "index.js",
   "bin": {
@@ -30,11 +30,12 @@
     "lodash.map": "^2.4.1",
     "minimist": "0.0.8",
     "resolve": "^0.6.3",
+    "transformer-compile": "0.0.2",
     "transformer-compose": "^0.1.0",
     "transformer-conversion": "^0.1.2",
     "transformer-installer": "^0.1.0",
     "transformer-loader": "^0.1.3",
-    "transformer-resolve": "^0.1.2",
+    "transformer-resolve": "^0.1.4",
     "transformer-type": "^0.1.0"
   },
   "devDependencies": {},

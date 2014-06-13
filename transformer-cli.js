@@ -1,5 +1,8 @@
 #!/usr/bin/env node
+var map = require('lodash.map')
+var resolve = require('transformer-resolve')
 var install = require('transformer-installer')
+var compile = require('transformer-compile')
 var moduleCheck = require('./module-check')
 // var compile = require('transformer-compiler')
 var transformer = require('./');
@@ -18,6 +21,8 @@ function usage() {
   log('')
   log('    src <id>            - print transformer description')
   log('    install [-g] <ids>  - install transformers')
+  log('    resolve [-g] <ids>  - resolve types to conversions between them')
+  log('    compile [-g] <ids>  - resolve types and compile conversion pipeline')
   log('')
 };
 
@@ -26,6 +31,11 @@ function src(id, useGlobal) {
   log(JSON.stringify(m.src, undefined, 1));
 }
 
+function resolveIds(types, useGlobal) {
+  return map(resolve(types, useGlobal), function(c) {
+    return c.src.id
+  }).join('\n')
+}
 
 function main() {
   if (argv._.length < 2) {
@@ -33,15 +43,14 @@ function main() {
     process.exit(-1)
   }
 
-  // set global resolution if wanted.
-  transformer.resolve.useGlobalModules(argv.g || argv.global)
-
   // set options.
   var command = argv._[0].toLowerCase()
+  var rest = argv._.slice(1)
   switch (command) {
-  case 'install': return install(argv._.slice(1), useGlobal)
-  case 'compile': return compile(argv._.slice(1), useGlobal)
-  case 'src': return src(argv._[1], useGlobal)
+  case 'install': return install(rest, useGlobal)
+  case 'resolve': return console.log(resolveIds(rest, useGlobal))
+  case 'compile': return console.log(compile(resolve(rest, useGlobal)))
+  case 'src': return src(rest[0], useGlobal)
   }
 
   usage()

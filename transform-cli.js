@@ -15,7 +15,7 @@ function usage() {
   log('Usage: ' + n + ' <in-type-id> <out-type-id> < <in-file> > <out-file>');
 };
 
-function convert(ids) {
+function convert(ids, useGlobal) {
   if (!(ids.length > 1)) {
     usage();
     process.exit(-1);
@@ -38,7 +38,7 @@ function convert(ids) {
   }
 
   // resolve ids -> conversion
-  var conversions = transformer.resolve(ids)
+  var conversions = transformer.resolve(ids, useGlobal)
 
   // transformer chain
   var async = argv["async"]
@@ -62,7 +62,6 @@ function convert(ids) {
 
 function main() {
   // set global resolution if wanted.
-  transformer.resolve.useGlobalModules(useGlobal)
   convert(argv._, useGlobal);
 }
 
