@@ -16,14 +16,18 @@ var log = console.log;
 
 function usage() {
   var n = process.argv[1];
-  log('Usage: transformer [<flags>] <subcommand>')
+  log('Usage: transformer [<flags>] <subcommand> [<args>]')
   log('')
   log('Subcommands:')
   log('')
-  log('    src <id>            - print transformer description')
-  log('    install [-g] <ids>  - install transformers')
-  log('    resolve [-g] <ids>  - resolve types to conversions between them')
-  log('    compile [-g] <ids>  - resolve types and compile conversion pipeline')
+  log('    src <id>              print transformer description')
+  log('    install [-g] <ids>    install transformers')
+  log('    resolve [-g] <ids>    resolve types to conversions between them')
+  log('    compile [-g] <ids>    resolve types and compile conversion pipeline')
+  log('')
+  log('Flags:')
+  log('')
+  log('    -g, --global          install and use global node_modules, instead of local')
   log('')
 };
 
