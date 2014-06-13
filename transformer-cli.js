@@ -37,6 +37,9 @@ function src(id, useGlobal) {
 }
 
 function resolveIds(types, useGlobal) {
+  // first ensure the types are installed
+  moduleCheck.ensureModulesAreInstalled(types, useGlobal)
+
   return map(resolve(types, useGlobal), function(c) {
     return c.src.id
   }).join('\n')

@@ -1,6 +1,6 @@
 var log = console.log
 var install = require('transformer-installer')
-var transformer = require('./')
+var Loader = require('transformer-loader')
 
 module.exports = {
   ensureModulesAreInstalled: ensureModulesAreInstalled,
@@ -23,7 +23,7 @@ function handleRequiresModulesError(ids) {
 }
 
 function ensureModulesAreInstalled(ids, global) {
-  missing = transformer.loader.missingModules(ids, global)
+  missing = Loader.missingModules(ids, global)
   if (missing.length > 0)
     handleRequiresModulesError(missing)
 }
@@ -32,7 +32,7 @@ function catchInstallErr(func) {
   try {
     func()
   } catch (e) {
-    if (transformer.loader.errIsModuleNotFound(e)) {
+    if (Loader.errIsModuleNotFound(e)) {
       var m = stringModuleIds(e.toString())
       handleRequiresModulesError(m)
     } else {
