@@ -30,6 +30,7 @@
     "lodash.map": "^2.4.1",
     "minimist": "0.0.8",
     "resolve": "^0.6.3",
+    "rw": "^0.1.4",
     "transformer-compile": "0.0.5",
     "transformer-compose": "^0.1.1",
     "transformer-conversion": "^0.1.2",
